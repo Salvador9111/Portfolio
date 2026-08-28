@@ -1,0 +1,111 @@
+EDUCATION
+
+UNIVERSITY
+
+Institution:
+Iqra University
+
+Location:
+Karachi, Sindh, Pakistan
+
+Degree:
+Bachelor of Software Engineering (BS Software Engineering)
+
+Status:
+Undergraduate student
+
+Started:
+2025
+
+FIELD OF STUDY
+
+Software Engineering
+
+ACADEMIC AREAS
+
+PROGRAMMING
+
+Hammad's academic programming studies include:
+
+* C programming
+* Python programming
+* Java programming
+* Programming fundamentals
+* Functions
+* Loops
+* Conditional statements
+* Arrays
+* Pointers
+* Structures
+* Recursion
+* File handling
+* Algorithms
+* Problem solving
+* Data Structures
+* Object-oriented programming concepts
+
+SOFTWARE DEVELOPMENT
+
+Academic and practical study includes:
+
+* Software project development
+* File management
+* Data storage
+* Data structures
+* Application development
+* Debugging
+
+MATHEMATICS
+
+Hammad has studied calculus and multivariable calculus topics including:
+
+* Derivatives
+* Partial derivatives
+* Chain rule
+* Continuity
+* Conservative vector fields
+* Stokes' theorem
+* Critical points
+* Maximum and minimum values
+* Second derivative test
+* Optimization
+
+ACADEMIC AI APPLICATION
+
+Hammad completed an academic project connecting multivariable calculus optimization concepts with artificial intelligence and face recognition.
+
+The project involved partial derivatives, critical points, maximum and minimum values, and the second derivative test.
+
+A Python visualization component was also developed for the project.
+
+AI AND MACHINE LEARNING SELF-STUDY
+
+In addition to university coursework, Hammad has independently studied areas including:
+
+* Artificial Intelligence
+* Machine Learning
+* Deep Learning
+* Natural Language Processing
+* Transformers
+* Generative AI
+* Large Language Models
+* Retrieval-Augmented Generation
+
+His self-directed learning has progressed from programming fundamentals toward practical AI application development.
+
+CURRENT LEARNING DIRECTION
+
+Hammad is currently developing his Software Engineering skills with a strong interest in Artificial Intelligence and practical software development.
+Hammad 
+His learning direction includes:
+
+* AI application development
+* RAG systems
+* LLM applications
+* Embeddings
+* Vector databases
+* Python
+* React
+* Full-stack development
+* Software engineering
+* GitHub and developer tooling

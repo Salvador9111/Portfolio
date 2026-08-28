@@ -1,0 +1,249 @@
+PROJECTS
+
+1. AI PORTFOLIO RAG CHATBOT
+
+Category:
+Artificial Intelligence, Generative AI, RAG, Python, React
+
+Description:
+Hammad is developing an AI-powered RAG chatbot for his personal portfolio.
+
+The chatbot is designed to answer questions about Hammad's background, education, skills, projects, and technical interests.
+
+The system uses Retrieval-Augmented Generation to retrieve relevant information from a personal knowledge base before generating an answer.
+
+Technology:
+
+* Python
+* React
+* LangChain
+* Google Gemini
+* Google Generative AI Embeddings
+* Chroma
+* REST API
+* CSS
+
+Architecture:
+
+* React frontend
+* Python backend
+* Document-based knowledge base
+* Text chunking
+* Embedding generation
+* Chroma vector database
+* Similarity-based retrieval
+* LLM response generation
+
+Knowledge-base files include:
+
+* about_me.txt
+* skills.txt
+* projects.txt
+* education.txt
+
+The project demonstrates practical experience with AI application development, RAG architecture, embeddings, vector databases, LLMs, APIs, and frontend-backend integration.
+
+2. JARVIS
+
+Category:
+Python, Voice Assistant, Artificial Intelligence
+
+Description:
+Jarvis is a Python voice assistant project developed by Hammad.
+
+The project demonstrates Hammad's interest in Python-based applications and voice-assistant technology.
+
+3. UClothes
+
+Category:
+JavaScript, Web Development, E-Commerce
+
+Description:
+UClothes is an e-commerce website developed using JavaScript.
+
+The project demonstrates Hammad's experience with frontend and web application development.
+
+4. LUMINA
+
+Category:
+Artificial Intelligence, Chatbot, NLP
+
+Description:
+Lumina is an AI-powered chatbot project.
+
+The project reflects Hammad's interest in conversational artificial intelligence and Natural Language Processing.
+
+5. AIRLINE RESERVATION SYSTEM — C
+
+Category:
+C Programming, File Handling, Data Structures
+
+Description:
+Hammad developed an Airline Reservation System in C as an academic programming project.
+
+The project was designed as a menu-driven application and incorporates multiple programming concepts.
+
+Technologies and concepts:
+
+* C
+* Structures
+* Arrays
+* Pointers
+* Functions
+* Recursion
+* File handling
+* Binary data files
+* Menu-driven programming
+
+The system includes concepts such as:
+
+* Users
+* Flights
+* Seats
+* Bookings
+* Seat selection
+* Payment
+* Refund handling
+
+Data files include:
+
+* flights.dat
+* seats.dat
+* bookings.dat
+* users.dat
+
+The project demonstrates the application of fundamental C programming concepts within a larger software system.
+
+6. JAVA AIRLINE RESERVATION SYSTEM
+
+Category:
+Java, Software Development
+
+Description:
+Hammad has also listed a Java Airline Reservation System as a project.
+
+The project focuses on airline reservation and booking functionality using Java.
+
+7. SMART LIBRARY SYSTEM
+
+Category:
+Java, File Management
+
+Description:
+SmartLibrarySystem is a Java project developed/explored by Hammad.
+
+The project includes a FileManager.java component for file-related operations.
+
+It demonstrates Java project organization and file management.
+
+8. GITHUB PROFILE README
+
+Category:
+GitHub, SVG, Animation, Automation
+
+Description:
+Hammad has developed and customized his GitHub profile README as an ongoing personal branding and developer-profile project.
+
+Features include:
+
+* Animated ASCII-style terminal banner
+* ASCII art portrait
+* Animated SVG components
+* Neofetch-style information card
+* Typing-effect bio
+* Technology badges
+* GitHub statistics widgets
+* Contribution visualizations
+* GitHub Actions automation
+* SMIL-based SVG animations
+
+The project combines web-based graphics, SVG animation, GitHub customization, and automation to create a distinctive developer profile.
+
+9. GITHUB DAILY AUTOMATION
+
+Category:
+GitHub Actions, Python, Automation
+
+Description:
+Hammad has worked on a GitHub Actions workflow that automates repository activity.
+
+The workflow uses scheduled execution and Python scripts to update an activity log and commit changes automatically.
+
+Technologies:
+
+* GitHub Actions
+* Python
+* Git
+* Cron scheduling
+
+10. PERSONAL PORTFOLIO WEBSITE
+
+Category:
+Web Development, Frontend, Personal Branding
+
+Description:
+Hammad has worked on a personal portfolio website for presenting his skills, projects, and developer identity.
+
+The project focuses on modern frontend development and professional presentation.
+
+11. MULTIVARIABLE CALCULUS — AI / FACE RECOGNITION PROJECT
+
+Category:
+Mathematics, Artificial Intelligence, Python
+
+Description:
+Hammad worked on an academic project connecting multivariable calculus optimization concepts with AI and face recognition.
+
+The project applied concepts including:
+
+* Partial derivatives
+* Critical points
+* Maximum and minimum values
+* Second derivative test
+* Optimization
+
+A Python-based visualization component was also used.
+
+The project demonstrates a connection between mathematical optimization concepts and artificial intelligence applications.
+
+12. PYTHON BEGINNER PROJECTS
+
+Hammad has built or explored several smaller Python projects, including:
+
+Rock Paper Scissors
+
+* A Python game demonstrating user input, conditional logic, and game rules.
+
+Dice Simulator
+
+* A Python project demonstrating randomization and user interaction.
+
+Morse Code Encoder
+
+* A Python project involving string processing and Morse code conversion.
+
+Turtle Spiral
+
+* A Python graphics project using the Turtle library to generate a spiral pattern.
+
+Pygame Experiments
+
+* Hammad has explored Python game development using Pygame.
+
+PROJECT DEVELOPMENT APPROACH
+
+Hammad develops projects through practical experimentation, implementation, debugging, and iterative improvement.
+
+His project work spans:
+
+* Software engineering
+* Artificial intelligence
+* RAG
+* Web development
+* JavaScript
+* Python
+* Java
+* C
+* GitHub automation
+* Developer branding
+* Mathematical applications of AI

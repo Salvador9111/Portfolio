@@ -1,0 +1,421 @@
+/* ==========================================================================
+   MUHAMMAD HAMMAD IMRAN PORTFOLIO - BLACK & WHITE MONOCHROME DESIGN SYSTEM
+   High Contrast Button Wording & Constant Text Visibility
+   ========================================================================== */
+
+:root {
+  /* Greensward Monochrome Palette */
+  --color-primary: #FFFFFF;
+  --color-primary-hover: #E4E4E7;
+  --color-primary-soft: rgba(255, 255, 255, 0.08);
+  --color-primary-border: rgba(255, 255, 255, 0.25);
+
+  --color-background: #08080A;
+  --color-surface-muted: #111114;
+  --color-surface: #17171C;
+  --color-surface-card: #1E1E24;
+  --color-text: #FFFFFF;
+  --color-text-secondary: #A0A0AC;
+  --color-text-muted: #646470;
+  --color-border: #262630;
+  --color-footer: #13131a;
+
+  /* Radii & Shadows */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 12px 36px rgba(0, 0, 0, 0.8);
+
+  /* Typography - Unified Gotham Font System */
+  --font-gotham: 'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  --font-serif: 'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  --font-heading: 'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  --font-body: 'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+}
+
+/* Starry Night Sky Footer Aesthetic - Monochrome Deep Night */
+.night-sky-footer {
+  position: relative;
+  background-color: #08080a;
+  background-image:
+    radial-gradient(circle at 50% -10%, rgba(255, 255, 255, 0.08) 0%, transparent 60%),
+    radial-gradient(1.5px 1.5px at 12% 20%, rgba(255, 255, 255, 0.75) 100%, transparent),
+    radial-gradient(1px 1px at 25% 65%, rgba(255, 255, 255, 0.45) 100%, transparent),
+    radial-gradient(2px 2px at 38% 30%, rgba(255, 255, 255, 0.8) 100%, transparent),
+    radial-gradient(1px 1px at 52% 75%, rgba(255, 255, 255, 0.5) 100%, transparent),
+    radial-gradient(1.5px 1.5px at 68% 18%, rgba(255, 255, 255, 0.65) 100%, transparent),
+    radial-gradient(1px 1px at 80% 60%, rgba(255, 255, 255, 0.45) 100%, transparent),
+    radial-gradient(2px 2px at 91% 28%, rgba(255, 255, 255, 0.75) 100%, transparent),
+    radial-gradient(1px 1px at 84% 82%, rgba(255, 255, 255, 0.5) 100%, transparent),
+    radial-gradient(1.5px 1.5px at 45% 45%, rgba(255, 255, 255, 0.6) 100%, transparent),
+    radial-gradient(1px 1px at 60% 88%, rgba(255, 255, 255, 0.35) 100%, transparent),
+    linear-gradient(180deg, #13131a 0%, #0b0b0e 60%, #060608 100%);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.night-sky-footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 18% 45%, rgba(255, 255, 255, 0.7) 100%, transparent),
+    radial-gradient(1.5px 1.5px at 30% 15%, rgba(255, 255, 255, 0.5) 100%, transparent),
+    radial-gradient(1px 1px at 48% 82%, rgba(255, 255, 255, 0.65) 100%, transparent),
+    radial-gradient(2px 2px at 62% 40%, rgba(255, 255, 255, 0.75) 100%, transparent),
+    radial-gradient(1px 1px at 75% 80%, rgba(255, 255, 255, 0.45) 100%, transparent),
+    radial-gradient(1.5px 1.5px at 94% 68%, rgba(255, 255, 255, 0.6) 100%, transparent);
+  opacity: 0.5;
+  animation: starTwinkle 7s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes starTwinkle {
+  0% { opacity: 0.25; transform: scale(0.99); }
+  50% { opacity: 0.7; transform: scale(1.01); }
+  100% { opacity: 0.35; transform: scale(1); }
+}
+
+/* Base Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-decoration: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-gotham) !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+body, button, input, textarea, select {
+  overflow-x: hidden;
+  line-height: 1.6;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-gotham) !important;
+  /* Neoconda Tech Grid Overlay */
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Link Overrides */
+a, a:visited, a:link {
+  text-decoration: none !important;
+  color: inherit;
+}
+
+::selection {
+  background: #FFFFFF;
+  color: #08080A;
+}
+
+/* CONSTANT VISIBILITY - All content visible by default */
+.animate-fade-in {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.scroll-reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Typography Helpers - Always Crisp & Constantly Visible */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-gotham) !important;
+  color: #FFFFFF !important;
+  letter-spacing: -0.02em;
+  opacity: 1 !important;
+}
+
+.font-serif {
+  font-family: var(--font-gotham) !important;
+  font-weight: 500;
+}
+
+.hero-editorial-title {
+  font-family: var(--font-gotham) !important;
+  font-size: clamp(2.4rem, 5.5vw, 4.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  color: #FFFFFF !important;
+}
+
+.section-editorial-title {
+  font-family: var(--font-gotham) !important;
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  color: #FFFFFF !important;
+}
+
+.body-large {
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+/* Text Accent - Bold White */
+.text-accent {
+  color: #FFFFFF !important;
+  font-weight: 700;
+  font-style: normal;
+  text-decoration: none !important;
+  opacity: 1 !important;
+}
+
+.label-caps {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
+
+/* Editorial Badge Line */
+.editorial-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.editorial-line {
+  height: 1px;
+  width: 40px;
+  background-color: rgba(255, 255, 255, 0.4);
+  display: inline-block;
+}
+
+/* Dark Neumorphism Design System */
+.dark-neumorphic-card {
+  background: linear-gradient(145deg, #16161f, #0c0c10) !important;
+  border-radius: 22px !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 12px 12px 28px #040406, -10px -10px 24px rgba(45, 48, 64, 0.35) !important;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.dark-neumorphic-card:hover {
+  transform: translateY(-6px) scale(1.01) !important;
+  background: linear-gradient(145deg, #1a1a24, #0e0e13) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 16px 16px 36px #030305, -12px -12px 30px rgba(55, 58, 78, 0.45) !important;
+}
+
+.dark-neumorphic-inset {
+  background: #0d0d11 !important;
+  box-shadow: inset 4px 4px 10px #040406, inset -4px -4px 10px rgba(45, 48, 62, 0.35) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.dark-neumorphic-badge {
+  background: linear-gradient(145deg, #181822, #0e0e13) !important;
+  box-shadow: 3px 3px 8px #040406, -3px -3px 8px rgba(45, 48, 62, 0.35) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark-neumorphic-btn {
+  background: linear-gradient(145deg, #181822, #0e0e13) !important;
+  box-shadow: 4px 4px 10px #040406, -3px -3px 8px rgba(45, 48, 62, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding: 8px 16px;
+  border-radius: 30px;
+  transition: all 0.25s ease !important;
+}
+
+.dark-neumorphic-btn:hover {
+  box-shadow: inset 2px 2px 6px #040406, inset -2px -2px 6px rgba(45, 48, 62, 0.4) !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Greensward & Neoconda Glass Card Surface */
+.greensward-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 50%, rgba(255, 255, 255, 0.05) 100%) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.5), inset 0 1px 2px 0 rgba(255, 255, 255, 0.35) !important;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease,
+              box-shadow 0.35s ease,
+              background 0.35s ease !important;
+  overflow: hidden;
+}
+
+@media (hover: hover) {
+  .greensward-card:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.1) 100%) !important;
+    border-color: rgba(255, 255, 255, 0.45) !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 255, 255, 0.12), inset 0 1px 2px 0 rgba(255, 255, 255, 0.6) !important;
+    transform: translate3d(0, -4px, 0) !important;
+  }
+}
+
+/* Translucent Liquid Glass System */
+.liquid-glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.03) 50%, rgba(255, 255, 255, 0.06) 100%) !important;
+  backdrop-filter: blur(24px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(200%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.5), inset 0 1px 2px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 1px 0 rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  will-change: transform, box-shadow;
+}
+
+.liquid-glass-card:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.06) 50%, rgba(255, 255, 255, 0.12) 100%) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  transform: translateY(-6px) scale(1.01) !important;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.7), 0 0 35px rgba(255, 255, 255, 0.15), inset 0 1px 2px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+.liquid-glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transition: left 0.7s ease;
+  pointer-events: none;
+}
+
+.liquid-glass-card:hover::before {
+  left: 100%;
+}
+
+/* Container & Layout */
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 768px) {
+  .container { padding: 0 36px; }
+}
+
+@media (min-width: 1024px) {
+  .container { padding: 0 48px; }
+}
+
+.section { padding: 80px 0; }
+@media (min-width: 768px) { .section { padding: 110px 0; } }
+
+/* Shakuro & Neoconda Pill Buttons - HIGH CONTRAST FIXED */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 26px;
+  font-size: 0.925rem;
+  font-weight: 700;
+  border-radius: 40px;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.btn *, .btn *::before, .btn *::after {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.btn svg {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* PRIMARY BUTTON: Pure white background pill with dark text (#08080A) */
+.btn-primary,
+.btn-primary:visited,
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary:hover {
+  background-color: #FFFFFF !important;
+  color: #08080A !important;
+  border-color: #FFFFFF !important;
+}
+
+.btn-primary svg {
+  color: #08080A !important;
+  stroke: #08080A !important;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.45);
+  transform: translate3d(0, -2px, 0);
+}
+
+.btn-primary:hover svg {
+  color: #08080A !important;
+  stroke: #08080A !important;
+  transform: translate3d(3px, 0, 0);
+}
+
+/* SECONDARY BUTTON: Dark background MUST have white text (#FFFFFF) always! */
+.btn-secondary,
+.btn-secondary:visited,
+.btn-secondary:active,
+.btn-secondary:focus {
+  background-color: var(--color-surface) !important;
+  color: #FFFFFF !important;
+  border-color: var(--color-border) !important;
+}
+
+.btn-secondary svg {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
+}
+
+.btn-secondary:hover {
+  border-color: #FFFFFF !important;
+  color: #FFFFFF !important;
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  transform: translate3d(0, -2px, 0);
+}
+
+.btn-secondary:hover svg {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
+  transform: translate3d(3px, 0, 0);
+}
+
+.btn-sm {
+  padding: 8px 18px;
+  font-size: 0.85rem;
+}
+
+/* Accessibility Focus States */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 3px;
+}

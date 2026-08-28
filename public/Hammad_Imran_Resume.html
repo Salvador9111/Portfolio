@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muhammad Hammad Imran — Resume</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 10.5pt;
+      color: #1a1a1a;
+      background: #fff;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 36px 48px;
+      line-height: 1.45;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 24pt;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-bottom: 6px;
+    }
+
+    .contact-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      font-size: 9.5pt;
+      flex-wrap: wrap;
+    }
+
+    .contact-line span,
+    .contact-line a {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      color: #1a1a1a;
+      text-decoration: none;
+      padding: 0 10px;
+      border-right: 1px solid #555;
+    }
+
+    .contact-line span:last-child,
+    .contact-line a:last-child {
+      border-right: none;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      margin-top: 14px;
+    }
+
+    .section-title {
+      font-size: 11pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1.5px solid #1a1a1a;
+      padding-bottom: 3px;
+      margin-bottom: 8px;
+    }
+
+    /* ── SUMMARY ── */
+    .summary p {
+      font-size: 10.5pt;
+      line-height: 1.5;
+    }
+
+    /* ── EDUCATION ── */
+    .edu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .edu-left .school {
+      font-weight: 700;
+      font-size: 10.5pt;
+    }
+
+    .edu-left .degree {
+      font-style: italic;
+      font-size: 10.5pt;
+    }
+
+    .edu-right {
+      text-align: right;
+      font-size: 10pt;
+      color: #333;
+      white-space: nowrap;
+    }
+
+    .coursework {
+      margin-top: 4px;
+      font-size: 10pt;
+    }
+
+    .coursework strong {
+      font-weight: 700;
+    }
+
+    /* ── PROJECTS ── */
+    .project {
+      margin-bottom: 10px;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .project-title {
+      font-size: 10.5pt;
+    }
+
+    .project-title strong {
+      font-weight: 700;
+    }
+
+    .project-title .tech {
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .project-date {
+      font-size: 10pt;
+      color: #333;
+      white-space: nowrap;
+      margin-left: 16px;
+    }
+
+    .project ul {
+      margin-top: 2px;
+      padding-left: 18px;
+    }
+
+    .project ul li {
+      font-size: 10pt;
+      line-height: 1.45;
+      margin-bottom: 1px;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .skill-row {
+      font-size: 10.5pt;
+      line-height: 1.4;
+    }
+
+    .skill-row strong {
+      font-weight: 700;
+    }
+
+    /* ── CERTIFICATIONS ── */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 32px;
+    }
+
+    .cert-item {
+      font-size: 10pt;
+    }
+
+    .cert-item .cert-name {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .cert-item .cert-name::before {
+      content: '•';
+      font-size: 11pt;
+      margin-right: 2px;
+    }
+
+    .cert-item .cert-issuer {
+      font-size: 9.5pt;
+      color: #444;
+      margin-left: 12px;
+      display: block;
+    }
+
+    /* ── PRINT STYLES ── */
+    @media print {
+      body {
+        padding: 20px 36px;
+        max-width: 100%;
+      }
+      @page {
+        size: A4;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>Muhammad Hammad Imran</h1>
+    <div class="contact-line">
+      <span>📞 +92 3152777355</span>
+      <a href="mailto:hammad.a.work@gmail.com">✉ hammad.a.work@gmail.com</a>
+      <span>📍 Karachi, Pakistan</span>
+      <a href="https://www.linkedin.com/in/hammad-imran-6b7005394/" target="_blank">in LinkedIn</a>
+      <a href="https://github.com/Salvador9111" target="_blank">⌥ GitHub</a>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="section summary">
+    <div class="section-title">Summary</div>
+    <p>Software Engineering student at Iqra University with hands-on experience building AI-powered applications, full-stack web solutions, and object-oriented systems in Python, Java, and JavaScript. Demonstrated expertise in API integration, speech recognition, responsive web development, and modular software architecture. Strong foundation in data structures, algorithms, and database design.</p>
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="section">
+    <div class="section-title">Education</div>
+    <div class="edu-header">
+      <div class="edu-left">
+        <div class="school">Iqra University</div>
+        <div class="degree">Bachelor of Software Engineering</div>
+      </div>
+      <div class="edu-right">
+        <div>Expected Graduation: 2029</div>
+        <div>Karachi, Pakistan</div>
+      </div>
+    </div>
+    <div class="coursework">
+      <strong>Coursework</strong>: Data Structures, Algorithms, Databases, Computer Systems.
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="section">
+    <div class="section-title">Projects</div>
+
+    <div class="project">
+      <div class="project-header">
+        <div class="project-title"><strong>Jarvis — Voice Assistant</strong> | <span class="tech">Python</span></div>
+        <div class="project-date">Sept. 2024</div>
+      </div>
+      <ul>
+        <li>Built a Python voice assistant using speech recognition and text to speech.</li>
+        <li>Integrated Wikipedia and Gemini APIs for intelligent query handling.</li>
+        <li>Reduced feature integration time by 40% via a plugin-based command handler built on OOP principles.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-header">
+        <div class="project-title"><strong>Uclothes — E-Commerce Store</strong> | <span class="tech">HTML, CSS, JavaScript</span></div>
+        <div class="project-date">Feb. 2026</div>
+      </div>
+      <ul>
+        <li>Built a responsive clothing e-commerce website with product catalog and shopping cart.</li>
+        <li>Developed modular JavaScript components for product filtering and cart state management.</li>
+        <li>Optimized user experience through responsive design and cross-browser compatibility.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-header">
+        <div class="project-title"><strong>Airline Reservation System</strong> | <span class="tech">Java</span></div>
+        <div class="project-date">July. 2025</div>
+      </div>
+      <ul>
+        <li>Developed a flight booking system with ticket reservation, scheduling, and passenger record management.</li>
+        <li>Reduced code redundancy by 30% using encapsulation, inheritance, and polymorphism in the system architecture.</li>
+        <li>Ensured 100% data integrity across sessions with robust file-handling mechanisms for structured data persistence.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-header">
+        <div class="project-title"><strong>Lumina — AI Chatbot</strong> | <span class="tech">JavaScript</span></div>
+        <div class="project-date">Aug. 2025</div>
+      </div>
+      <ul>
+        <li>Developed an AI chatbot with asynchronous REST API integration for real-time, context aware responses.</li>
+        <li>Built a dynamic frontend using DOM manipulation and event-driven architecture for smooth experiences.</li>
+        <li>Ensured 90% uptime reliability with error handling and fallback mechanisms for API failure scenarios.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-header">
+        <div class="project-title"><strong>RAG Chatbot</strong> | <span class="tech">Python, LangChain, Gemini API</span></div>
+        <div class="project-date">Jan. 2025</div>
+      </div>
+      <ul>
+        <li>Engineered a RAG architecture combining document vector indexing and LLM context retrieval.</li>
+        <li>Delivered real-time grounded domain answers with source citation and low-latency responses.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="section">
+    <div class="section-title">Skills</div>
+    <div class="skills-grid">
+      <div class="skill-row"><strong>Languages</strong> : Python, Java, C, HTML, CSS, JavaScript</div>
+      <div class="skill-row"><strong>Tools &amp; Platforms</strong> : VS Code, Git, GitHub, Figma, Notion, Jira, Trello, Google Analytics</div>
+      <div class="skill-row"><strong>Concepts</strong> : Object-Oriented Programming (OOP), Data Structures, Algorithms, REST APIs</div>
+      <div class="skill-row"><strong>Soft Skills</strong> : Communication, Professional Networking, Team Collaboration, Problem Solving</div>
+    </div>
+  </div>
+
+  <!-- CERTIFICATIONS -->
+  <div class="section">
+    <div class="section-title">Certifications</div>
+    <div class="certs-grid">
+      <div class="cert-item">
+        <div class="cert-name">Career Essentials in Generative AI</div>
+        <span class="cert-issuer">by Microsoft</span>
+      </div>
+      <div class="cert-item">
+        <div class="cert-name">Python 101 for Data Science</div>
+        <span class="cert-issuer">by IBM / Cognitive Class</span>
+      </div>
+      <div class="cert-item">
+        <div class="cert-name">Introduction to Front End Development</div>
+        <span class="cert-issuer">by Simplilearn</span>
+      </div>
+      <div class="cert-item">
+        <div class="cert-name">C Programming For Beginners</div>
+        <span class="cert-issuer">by Udemy</span>
+      </div>
+      <div class="cert-item">
+        <div class="cert-name">GitHub Foundations</div>
+        <span class="cert-issuer">by DataCamp</span>
+      </div>
+      <div class="cert-item">
+        <div class="cert-name">Elements of AI</div>
+        <span class="cert-issuer">by University of Helsinki</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

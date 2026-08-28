@@ -1,0 +1,228 @@
+SKILLS
+
+PROGRAMMING LANGUAGES
+
+Python
+
+* Python programming fundamentals
+* Python application development
+* Python for AI applications
+* Python for RAG applications
+* Python APIs and environment variables
+* Python virtual environments
+
+C
+
+* Programming fundamentals
+* Variables and data types
+* Conditional statements
+* Loops
+* Functions
+* Recursion
+* Arrays
+* Pointers
+* Structures
+* File handling
+* Binary data files
+* Menu-driven applications
+* Sorting algorithms
+* GCD and LCM
+* Fibonacci sequence
+* String and input handling
+
+Java
+
+* Java programming
+* Object-oriented programming concepts
+* File management
+* Project-based Java development
+
+JavaScript
+
+* JavaScript development
+* Frontend development
+* Web application development
+
+WEB DEVELOPMENT
+
+* HTML
+* CSS
+* JavaScript
+* React
+* Frontend development
+* Interactive UI development
+* REST API integration
+* Frontend-backend communication
+* Chatbot interfaces
+* E-commerce website development
+* SVG creation
+* SVG animation
+* SMIL animations
+
+REACT
+
+Hammad has experience with:
+
+* React components
+* React state
+* React hooks
+* useState
+* useRef
+* useEffect
+* Interactive chatbot interfaces
+* Connecting React frontends to Python backends
+* CSS-based component styling
+
+ARTIFICIAL INTELLIGENCE
+
+Hammad has studied and worked with:
+
+* Artificial Intelligence fundamentals
+* Machine Learning
+* Deep Learning
+* Natural Language Processing (NLP)
+* Transformers
+* Generative AI
+* Large Language Models
+* Retrieval-Augmented Generation (RAG)
+
+RETRIEVAL-AUGMENTED GENERATION
+
+Hammad has practical experience with RAG concepts including:
+
+* Document ingestion
+* Document loading
+* Text splitting
+* Text chunking
+* Chunk overlap
+* Embedding generation
+* Vector databases
+* Similarity-based retrieval
+* Context retrieval
+* LLM integration
+* RAG chatbot development
+
+LANGCHAIN
+
+Hammad has worked with the LangChain ecosystem, including:
+
+* LangChain document loaders
+* Text splitters
+* Google Gemini integrations
+* Vector stores
+* Retrieval pipelines
+* RAG application architecture
+
+Relevant packages explored include:
+
+* langchain-community
+* langchain-google-genai
+* langchain-chroma
+* langchain-text-splitters
+
+GOOGLE GEMINI
+
+Hammad has worked with Google Gemini for AI applications, including:
+
+* Gemini language models
+* Gemini embeddings
+* Google Generative AI APIs
+
+He has used the Gemini embedding model:
+
+models/gemini-embedding-001
+
+EMBEDDINGS AND VECTOR DATABASES
+
+Hammad has experience with:
+
+* Text embeddings
+* Google Generative AI embeddings
+* Local embedding models
+* all-MiniLM-L6-v2
+* Chroma vector database
+* Persistent vector storage
+* Similarity-based document retrieval
+
+GIT AND GITHUB
+
+* Git
+* GitHub
+* GitHub repositories
+* Git commits
+* Git push
+* GitHub README customization
+* GitHub Actions
+* Workflow automation
+* GitHub contribution visualizations
+
+GITHUB ACTIONS
+
+Hammad has worked with GitHub Actions for automation, including:
+
+* Scheduled workflows
+* Cron-based workflows
+* Python scripts in workflows
+* Repository checkout
+* Python environment setup
+* Automated Git configuration
+* Automated commits and pushes
+
+DEVELOPMENT TOOLS
+
+* Visual Studio Code
+* Python virtual environments
+* Git
+* GitHub
+* LaTeX
+
+OPERATING SYSTEMS
+
+* Linux Mint
+
+Linux-related tools explored:
+
+* i3 window manager
+* Conky
+
+MATHEMATICS
+
+Hammad has studied:
+
+* Discrete Structures
+* Set Theory
+* Calculus
+* Multivariable Calculus
+* Derivatives
+* Partial derivatives
+* Chain rule
+* Continuity
+* Conservative vector fields
+* Stokes' theorem
+* Critical points
+* Maximum and minimum values
+* Second derivative test
+* Optimization concepts
+
+DESIGN AND CREATIVE TECHNOLOGIES
+
+* SVG design
+* SVG animation
+* ASCII artwork
+* GitHub README design
+* Animated profile graphics
+* Logo design
+* Sticker design
+* Web interface design
+* Visual branding
+
+PROFESSIONAL SKILLS
+
+* Problem solving
+* Debugging
+* Project-based learning
+* Technical experimentation
+* Continuous learning
+* Software project development
+* Technical communication
+* Portfolio development

@@ -1,0 +1,79 @@
+ABOUT ME
+
+FULL NAME: Muhammad Hammad Imran
+PREFERRED NAME: Hammad
+LOCATION: Karachi, Sindh, Pakistan
+GITHUB USERNAME: Salvador9111
+AGE: 19
+
+PROFILE
+
+Hammad is an undergraduate Software Engineering student at Iqra University in Karachi, Pakistan.
+
+He is developing practical software engineering skills through university coursework, personal projects, and self-directed learning. His primary technical interests include artificial intelligence, machine learning, generative AI, Retrieval-Augmented Generation (RAG), full-stack development, and software development.
+
+Hammad enjoys building practical software projects and experimenting with technologies that combine software engineering and artificial intelligence.
+
+TECHNICAL FOCUS
+
+Hammad's main areas of interest and development include:
+
+* Software Engineering
+* Artificial Intelligence
+* Machine Learning
+* Generative AI
+* Natural Language Processing
+* Transformers
+* Retrieval-Augmented Generation (RAG)
+* Full-stack development
+* Web development
+* Python development
+* JavaScript development
+* Git and GitHub
+* Automation
+* Developer portfolio development
+
+AI AND RAG
+
+Hammad has developed an AI-powered RAG chatbot for his portfolio.
+
+The chatbot is designed to answer questions about Hammad's:
+
+* Background
+* Education
+* Skills
+* Projects
+* Technical interests
+
+The RAG application uses a knowledge base containing structured text files. The system retrieves relevant information from the knowledge base and uses that information to generate answers.
+
+The project combines a React frontend with a Python-based RAG backend and uses technologies from the LangChain and Google Gemini ecosystems.
+
+DEVELOPER PROFILE
+
+Hammad actively develops his GitHub and online developer presence.
+
+His GitHub profile customization work includes:
+
+* Animated ASCII-style terminal banner
+* Animated SVG components
+* ASCII art portrait
+* Neofetch-style information card
+* Typing-effect bio
+* Technology badges
+* GitHub statistics widgets
+* Contribution visualizations
+* GitHub Actions automation
+* SMIL-based SVG animations
+
+He has also worked on a personal portfolio website focused on presenting his projects, technical skills, and developer identity.
+
+PROFESSIONAL DEVELOPMENT
+
+Hammad is building his software engineering experience through academic projects, personal projects, AI experimentation, web development, and continuous technical learning.
+
+He has also explored creative digital work such as logo and sticker design.
+
+RESUME
+
+Hammad has prepared his resume using a LaTeX-based professional resume template.

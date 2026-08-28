@@ -1,0 +1,134 @@
+import fs from "fs";
+
+const pdfContent = `%PDF-1.4
+1 0 obj <</Type /Catalog /Pages 2 0 R>> endobj
+2 0 obj <</Type /Pages /Kids [3 0 R] /Count 1>> endobj
+3 0 obj <</Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources <</Font <</F1 5 0 R>>>> >> endobj
+4 0 obj <</Length 3200>> stream
+BT
+/F1 20 Tf
+50 750 Td
+(Muhammad Hammad Imran) Tj
+
+/F1 10 Tf
+0 -22 Td
+(Phone: +92 3152777355 | Email: hammad.a.work@gmail.com | Karachi, Pakistan) Tj
+0 -16 Td
+(LinkedIn: linkedin.com/in/hammadimran | GitHub: github.com/hammadimran) Tj
+
+0 -28 Td
+(SUMMARY) Tj
+0 -14 Td
+(Software Engineering student at Iqra University with hands-on experience building AI-powered) Tj
+0 -14 Td
+(applications, full-stack web solutions, and object-oriented systems in Python, Java,) Tj
+0 -14 Td
+(and JavaScript. Experienced in API integration, speech recognition, responsive web) Tj
+0 -14 Td
+(development, and modular software architecture. Strong foundation in data structures,) Tj
+0 -14 Td
+(algorithms, and database design.) Tj
+
+0 -28 Td
+(EDUCATION) Tj
+0 -14 Td
+(Iqra University - Bachelor of Software Engineering | Expected Graduation: 2029) Tj
+0 -14 Td
+(Location: Karachi, Pakistan) Tj
+0 -14 Td
+(Coursework: Data Structures, Algorithms, Databases, Computer Systems) Tj
+
+0 -28 Td
+(PROJECTS) Tj
+
+0 -14 Td
+(Jarvis Voice Assistant (Python) - Sept. 2024) Tj
+0 -14 Td
+(- Built using speech recognition and text-to-speech technologies.) Tj
+0 -14 Td
+(- Integrated Wikipedia and Gemini APIs for intelligent query handling.) Tj
+0 -14 Td
+(- Reduced feature integration time by 40 percent using plugin-based OOP architecture.) Tj
+
+0 -18 Td
+(Uclothes E-Commerce Store (HTML, CSS, JavaScript) - Feb. 2026) Tj
+0 -14 Td
+(- Developed responsive clothing e-commerce platform with shopping cart.) Tj
+0 -14 Td
+(- Built modular JavaScript components for filtering and cart management.) Tj
+0 -14 Td
+(- Improved UX through responsive and cross-browser design.) Tj
+
+0 -18 Td
+(Airline Reservation System (Java) - July. 2025) Tj
+0 -14 Td
+(- Developed complete flight reservation and passenger management system.) Tj
+0 -14 Td
+(- Reduced code redundancy by 30 percent using OOP principles.) Tj
+0 -14 Td
+(- Ensured reliable file-based data persistence across sessions.) Tj
+
+0 -18 Td
+(Lumina AI Chatbot (JavaScript) - Aug. 2025) Tj
+0 -14 Td
+(- Built chatbot with asynchronous REST API integration.) Tj
+0 -14 Td
+(- Developed dynamic frontend using DOM and event-driven programming.) Tj
+0 -14 Td
+(- Achieved 90 percent uptime through robust error handling.) Tj
+
+0 -28 Td
+(SKILLS) Tj
+0 -14 Td
+(Languages: Python, Java, C, HTML, CSS, JavaScript) Tj
+0 -14 Td
+(Tools: VS Code, Git, GitHub, Figma, Notion, Jira, Trello, Google Analytics) Tj
+0 -14 Td
+(Concepts: OOP, Data Structures, Algorithms, REST APIs) Tj
+0 -14 Td
+(Soft Skills: Communication, Team Collaboration, Networking, Problem Solving) Tj
+
+0 -28 Td
+(CERTIFICATIONS) Tj
+0 -14 Td
+(- Career Essentials in Generative AI - Microsoft) Tj
+0 -14 Td
+(- Python 101 for Data Science - IBM Cognitive Class) Tj
+0 -14 Td
+(- Introduction to Front End Development - Simplilearn) Tj
+0 -14 Td
+(- C Programming For Beginners - Udemy) Tj
+0 -14 Td
+(- GitHub Foundations - DataCamp) Tj
+0 -14 Td
+(- Elements of AI - University of Helsinki) Tj
+
+ET
+endstream
+endobj
+
+5 0 obj
+<</Type /Font /Subtype /Type1 /BaseFont /Helvetica>>
+endobj
+
+xref
+0 6
+0000000000 65535 f
+0000000009 00000 n
+0000000058 00000 n
+0000000115 00000 n
+0000000244 00000 n
+0000003500 00000 n
+trailer
+<</Size 6 /Root 1 0 R>>
+startxref
+3575
+%%EOF`;
+
+if (!fs.existsSync("public")) {
+  fs.mkdirSync("public", { recursive: true });
+}
+
+fs.writeFileSync("public/Hammad_Imran_Resume.pdf", pdfContent);
+
+console.log("PDF resume updated successfully!");

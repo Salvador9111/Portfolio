@@ -1,0 +1,53 @@
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 9999;
+  /* Blend mode ensures the multiple overlapping layers add up beautifully */
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cursor-glow-inner {
+  position: absolute;
+  /* Centered around the origin */
+  top: -150px;
+  left: -150px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  
+  /* Important for smooth hardware-accelerated fluid animations */
+  will-change: transform;
+  
+  /* Soft, semi-transparent warm white cloud base. Since we have multiple trailing layers, 
+     these warm colors stack organically to create a soft ivory-amber glowing cloud. */
+  background: radial-gradient(
+    circle,
+    rgba(255, 245, 230, 0.45) 0%,
+    rgba(255, 238, 215, 0.3) 40%,
+    rgba(255, 230, 200, 0.12) 60%,
+    rgba(255, 230, 200, 0) 85%
+  );
+  filter: blur(40px);
+  
+  /* Removed 'transform' from transition to prevent JS/CSS engine conflicts during requestAnimationFrame */
+  transition: opacity 0.3s ease, background 0.3s ease;
+}
+
+/* Hover state on interactive elements */
+.cursor-glow.hover .cursor-glow-inner {
+  /* Dim and expand the spotlight with soft warm white tones */
+  background: radial-gradient(
+    circle,
+    rgba(255, 248, 238, 0.5) 0%,
+    rgba(255, 242, 225, 0.35) 40%,
+    rgba(255, 235, 210, 0.15) 70%,
+    rgba(255, 235, 210, 0) 90%
+  );
+  filter: blur(60px);
+}
