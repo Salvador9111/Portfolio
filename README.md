@@ -168,20 +168,6 @@ npm run preview
 
 ---
 
-# 📄 Resume Generation
-
-The project includes dedicated JavaScript scripts for generating the resume.
-
-### Resume scripts
-
-```text
-generate-resume.mjs
-make_resume.js
-```
-
-These scripts allow the resume-generation process to remain separate from the main portfolio interface.
-
----
 
 
 # 🎯 What This Portfolio Showcases
