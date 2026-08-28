@@ -16,7 +16,7 @@
 
 </div>
 
----
+    
 
 # 🌐 Personal Portfolio
 
@@ -28,7 +28,7 @@ The portfolio is built using **React and Vite** and is organized into separate f
 
 > 🚀 This portfolio is a continuously evolving project. As I learn new technologies and build new projects, the portfolio will continue to grow.
 
----
+    
 
 
 # 🧰 Tech Stack
@@ -48,7 +48,7 @@ The portfolio is built using **React and Vite** and is organized into separate f
 ### Core Technologies
 
 | Technology    | Purpose                                         |
-| ------------- | ----------------------------------------------- |
+|                 - |                                                             -- |
 | ⚛️ React      | Frontend UI and component development           |
 | ⚡ Vite        | Development server and production build tooling |
 | 🟨 JavaScript | Application logic                               |
@@ -59,7 +59,7 @@ The portfolio is built using **React and Vite** and is organized into separate f
 | 🔧 Git        | Version control                                 |
 | 🐙 GitHub     | Source control and project hosting              |
 
----
+    
 
 # 🏗️ Project Architecture
 
@@ -110,7 +110,7 @@ Portfolio/
 
 The repository's public GitHub structure confirms the presence of `Backend`, `Frontend`, `public`, the resume scripts, `package.json`, `vite.config.js`, and Oxlint configuration.
 
----
+    
 
 # 🚀 Getting Started
 
@@ -150,7 +150,7 @@ Usually:
 http://localhost:5173
 ```
 
----
+    
 
 # 🏭 Production Build
 
@@ -166,7 +166,7 @@ To preview the production build:
 npm run preview
 ```
 
----
+    
 
 
 
@@ -198,7 +198,7 @@ A dedicated resume section and resume-generation workflow.
 
 Professional links and methods of getting in touch.
 
----
+    
 
 # 🔥 GitHub Streak
 
@@ -208,7 +208,7 @@ Professional links and methods of getting in touch.
 
 </div>
 
----
+    
 
 # 🐍 Contribution Snake
 
@@ -220,7 +220,7 @@ Professional links and methods of getting in touch.
 
 > ⚠️ The Snake animation requires a GitHub Actions workflow to generate the SVG. If you haven't configured it yet, remove this section or add the workflow described below.
 
----
+    
 
 # 📈 Contribution Activity
 
@@ -230,7 +230,7 @@ Professional links and methods of getting in touch.
 
 </div>
 
----
+    
 
 # 🗺️ Development Roadmap
 
@@ -265,7 +265,6 @@ This portfolio is continuously being improved.
 * [ ] CI/CD pipeline
 * [ ] More developer-focused analytics
 
----
 
 # 🔐 Environment Variables
 
@@ -290,7 +289,6 @@ Never commit:
 
 or API keys, passwords, tokens, or other secrets to a public repository.
 
----
 
 # 🧪 Development
 
@@ -315,7 +313,6 @@ git push origin feature/new-feature
 
 Then create a Pull Request on GitHub if appropriate.
 
----
 
 # ⚡ Performance Philosophy
 
@@ -331,35 +328,9 @@ The portfolio is intended to remain:
 
 Rather than adding unnecessary libraries or effects, new functionality should have a clear purpose.
 
----
 
-# 🧑‍💻 About Me
 
-<div align="center">
 
-## Hammad Imran
-
-**Software Engineering Student**
-
-I'm an undergraduate Software Engineering student interested in:
-
-```text
-Software Development
-        ↓
-Web Development
-        ↓
-Python & Programming
-        ↓
-Artificial Intelligence
-        ↓
-RAG & AI Applications
-        ↓
-Building Practical Projects
-```
-
-I enjoy learning by building projects and experimenting with different technologies.
-
----
 
 # 🤝 Connect With Me
 
