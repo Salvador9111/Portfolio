@@ -30,54 +30,6 @@ The portfolio is built using **React and Vite** and is organized into separate f
 
 ---
 
-## ✨ Features
-
-### 🎨 Modern Portfolio Interface
-
-A clean and responsive interface designed to present personal and professional information in an organized way.
-
-### ⚛️ React-Based Frontend
-
-The frontend is built around React, allowing the portfolio UI to be organized into reusable components.
-
-### ⚡ Vite Development Environment
-
-Vite provides a fast development experience and modern production build workflow.
-
-### 📱 Responsive Design
-
-The portfolio is designed to work across:
-
-* 💻 Desktop
-* 💼 Laptop
-* 📱 Mobile
-* 📟 Tablet
-
-### 📄 Resume Generation
-
-The repository includes dedicated scripts for generating and managing the portfolio resume.
-
-```text
-generate-resume.mjs
-make_resume.js
-```
-
-### 🧩 Frontend + Backend Architecture
-
-The repository separates application functionality into:
-
-```text
-Frontend/
-Backend/
-```
-
-This keeps client-side and server-side functionality organized independently.
-
-### 🛠️ Developer-Oriented Structure
-
-The project is structured so that new sections, projects, technologies, and functionality can be added as my development experience grows.
-
----
 
 # 🧰 Tech Stack
 
@@ -471,12 +423,7 @@ I enjoy learning by building projects and experimenting with different technolog
 <a href="https://github.com/Salvador9111">
 <img src="https://img.shields.io/badge/GitHub-Salvador9111-181717?style=for-the-badge&logo=github" alt="GitHub"/>
 </a>
-
-<!-- Replace the # below with your real LinkedIn URL -->
-
-<a href="#">
-<img src="https://img.shields.io/badge/LinkedIn-Hammad%20Imran-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
-</a>
+<a href="https://www.linkedin.com/in/hammad-imran-6b700539"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a> 
 
 </div>
 
