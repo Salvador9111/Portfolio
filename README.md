@@ -9,9 +9,6 @@
 <br>
 
 
-<a href="#-connect-with-me">
-<img src="https://img.shields.io/badge/Connect-With-Me-6C63FF?style=for-the-badge&logo=linktree&logoColor=white" alt="Connect"/>
-</a>
 
 <br><br>
 
