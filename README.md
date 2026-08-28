@@ -200,18 +200,6 @@ Professional links and methods of getting in touch.
 
 ---
 
-# 📊 GitHub Statistics
-
-<div align="center">
-
-<img src="https://github-readme-stats.vercel.app/api?username=Salvador9111&show_icons=true&theme=tokyonight&hide_border=true&count_private=true" height="170" alt="GitHub Statistics"/>
-
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Salvador9111&layout=compact&theme=tokyonight&hide_border=true" height="170" alt="Top Languages"/>
-
-</div>
-
----
-
 # 🔥 GitHub Streak
 
 <div align="center">
