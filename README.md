@@ -425,11 +425,6 @@ I enjoy learning by building projects and experimenting with different technolog
 <a href="mailto:hammad.a.work@gmail.com"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail"/></a>  
 </div>
 
----
-
-
-
-<br>
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=120&section=footer" width="100%" alt="Footer"/>
 
