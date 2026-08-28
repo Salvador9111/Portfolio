@@ -183,35 +183,6 @@ These scripts allow the resume-generation process to remain separate from the ma
 
 ---
 
-# 🖼️ Portfolio Preview
-
-<div align="center">
-
-### 💻 Desktop
-
-<img src="./public/portfolio-preview.png" width="90%" alt="Portfolio Desktop Preview"/>
-
-<br><br>
-
-### 📱 Mobile
-
-<img src="./public/mobile-preview.png" width="40%" alt="Portfolio Mobile Preview"/>
-
-</div>
-
-> Replace the image paths above with your actual screenshots.
-
-For example:
-
-```text
-public/
-├── portfolio-preview.png
-└── mobile-preview.png
-```
-
-If you don't have screenshots yet, you can remove this section temporarily.
-
----
 
 # 🎯 What This Portfolio Showcases
 
