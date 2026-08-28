@@ -8,9 +8,6 @@
 
 <br>
 
-<a href="https://github.com/Salvador9111">
-<img src="https://img.shields.io/badge/GitHub-Salvador9111-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
-</a>
 
 <a href="#-connect-with-me">
 <img src="https://img.shields.io/badge/Connect-With-Me-6C63FF?style=for-the-badge&logo=linktree&logoColor=white" alt="Connect"/>
