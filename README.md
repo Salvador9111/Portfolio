@@ -218,18 +218,6 @@ Professional links and methods of getting in touch.
 
 </div>
 
-> ⚠️ The Snake animation requires a GitHub Actions workflow to generate the SVG. If you haven't configured it yet, remove this section or add the workflow described below.
-
-    
-
-# 📈 Contribution Activity
-
-<div align="center">
-
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=Salvador9111&theme=tokyo-night&hide_border=true" width="95%" alt="GitHub Activity Graph"/>
-
-</div>
-
     
 
 # 🗺️ Development Roadmap
