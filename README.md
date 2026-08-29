@@ -1,6 +1,6 @@
 <div align="center">
 
-#  I'm HAMMAD IMRAN
+#  HAMMAD IMRAN
 
 ### 💻 Software Engineering Student • Developer • Tech Enthusiast
 
