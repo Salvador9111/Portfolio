@@ -2,7 +2,7 @@
 
 #  HAMMAD IMRAN
 
-### 💻 Software Engineering Student • Developer • Tech Enthusiast
+### 💻 Software Engineering Student 
 
 <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=6C63FF&center=true&vCenter=true&width=650&lines=Software+Engineering+Student;Building+Projects+That+Solve+Problems;Exploring+AI+%26+Software+Development;Always+Learning+Something+New" alt="Typing SVG" />
 
