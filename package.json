@@ -2,8 +2,11 @@
   "name": "portfolio-root",
   "private": true,
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "npm run dev --prefix Frontend",
+    "dev": "node dev.mjs",
+    "dev:frontend": "npm run dev --prefix Frontend",
+    "dev:backend": "python Backend/main.py",
     "build": "npm run build --prefix Frontend",
     "postinstall": "npm install --prefix Frontend",
     "preview": "npm run preview --prefix Frontend",
