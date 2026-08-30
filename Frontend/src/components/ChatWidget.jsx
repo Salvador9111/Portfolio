@@ -34,12 +34,18 @@ const ChatWidget = () => {
     // API URL
     // -----------------------------
     const getApiUrl = () => {
-        // Vite
+        // Explicit API URL from environment variable (if provided)
         if (import.meta.env?.VITE_API_URL) {
-            return `${import.meta.env.VITE_API_URL.replace(/\/$/, '')}/chat`;
+            const base = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+            return base.endsWith('/chat') ? base : `${base}/chat`;
         }
 
-        // Default local backend
+        // On deployed production site (Vercel serverless function on same domain)
+        if (import.meta.env?.PROD) {
+            return '/chat';
+        }
+
+        // Default local development backend
         return 'http://localhost:8000/chat';
     };
 
