@@ -3,6 +3,11 @@
   "buildCommand": "npm run build --prefix Frontend",
   "outputDirectory": "Frontend/dist",
   "framework": "vite",
+  "functions": {
+    "api/index.py": {
+      "includeFiles": "Backend/**"
+    }
+  },
   "rewrites": [
     {
       "source": "/chat",

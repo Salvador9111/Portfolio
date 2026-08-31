@@ -27,15 +27,20 @@ for env_path in [BACKEND_DIR / ".env", SCRIPT_DIR / ".env", ROOT_DIR / ".env"]:
 else:
     load_dotenv()
 
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "").strip()
+GOOGLE_API_KEY = (
+    os.getenv("GOOGLE_API_KEY", "").strip()
+    or os.getenv("GEMINI_API_KEY", "").strip()
+)
 
-# Preferred models in priority order
+# Preferred Gemini models in priority order with automated fallback
 MODEL_CANDIDATES = [
     "gemini-3.6-flash",
     "gemini-3.5-flash",
     "gemini-3.7-flash",
     "gemini-3.5-flash-lite",
     "gemini-3.1-flash-lite",
+    "gemini-flash-latest",
+    "gemini-2.5-flash",
 ]
 
 # -----------------------------
@@ -43,11 +48,11 @@ MODEL_CANDIDATES = [
 # -----------------------------
 app = FastAPI(title="Hammad Portfolio AI Chatbot", version="2.5.0")
 
+# Universal CORS: Allow all origins so chatbot works from any device, domain, network, or preview URL
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://portfolio-newiota.vercel.app/"],
-    allow_origin_regex=r"https://.*\.vercel\.app",
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -63,9 +68,16 @@ class Question(BaseModel):
 # -----------------------------
 DATA_DIR = SCRIPT_DIR / "Portfolio Data"
 if not DATA_DIR.exists():
-    alt_dir = SCRIPT_DIR / "portfolio_data"
-    if alt_dir.exists():
-        DATA_DIR = alt_dir
+    for candidate in [
+        SCRIPT_DIR / "portfolio_data",
+        BACKEND_DIR / "Rag Chatbot" / "Portfolio Data",
+        ROOT_DIR / "Backend" / "Rag Chatbot" / "Portfolio Data",
+        Path.cwd() / "Backend" / "Rag Chatbot" / "Portfolio Data",
+        Path.cwd() / "Portfolio Data",
+    ]:
+        if candidate.exists():
+            DATA_DIR = candidate
+            break
 
 
 class DocumentChunk:
@@ -75,6 +87,15 @@ class DocumentChunk:
         self.section = section
         # Pre-tokenize words for fast BM25/keyword scoring
         self.words = set(re.findall(r"\w+", self.content.lower()))
+
+
+# Fallback summary in case serverless runtime cannot access raw .txt files on disk
+DEFAULT_FALLBACK_TEXT = """
+Muhammad Hammad Imran is a Software Engineer, AI Developer, and Full-Stack Specialist.
+He specializes in AI/ML engineering, RAG pipelines, FastAPI, React, Node.js, Python, TypeScript, and modern Cloud & DevOps solutions.
+He has built production AI applications, portfolio platforms, intelligent automation systems, and high-performance web systems.
+Education: Bachelor's in Software Engineering with strong focus on AI, data structures, algorithms, and distributed systems.
+"""
 
 
 class PortfolioKnowledgeBase:
@@ -88,45 +109,47 @@ class PortfolioKnowledgeBase:
         self.chunks = []
         full_texts = []
 
-        if not self.data_dir.exists():
-            print(f"[RAG] Warning: Data directory not found at {self.data_dir}")
-            return
-
-        for file_path in sorted(self.data_dir.glob("*.txt")):
-            try:
-                raw_text = file_path.read_text(encoding="utf-8").strip()
-                if not raw_text:
-                    continue
-
-                source_name = file_path.stem.replace("_", " ").title()
-                full_texts.append(f"=== {source_name.upper()} ===\n{raw_text}")
-
-                # Split document into logical sections / paragraphs for retrieval
-                paragraphs = re.split(r"\n\s*\n+", raw_text)
-                current_chunk = []
-                current_length = 0
-
-                for para in paragraphs:
-                    para = para.strip()
-                    if not para:
+        if self.data_dir.exists():
+            for file_path in sorted(self.data_dir.glob("*.txt")):
+                try:
+                    raw_text = file_path.read_text(encoding="utf-8").strip()
+                    if not raw_text:
                         continue
 
-                    # Group small paragraphs into ~400-800 character chunks
-                    if current_length + len(para) > 600 and current_chunk:
+                    source_name = file_path.stem.replace("_", " ").title()
+                    full_texts.append(f"=== {source_name.upper()} ===\n{raw_text}")
+
+                    # Split document into logical sections / paragraphs for retrieval
+                    paragraphs = re.split(r"\n\s*\n+", raw_text)
+                    current_chunk = []
+                    current_length = 0
+
+                    for para in paragraphs:
+                        para = para.strip()
+                        if not para:
+                            continue
+
+                        # Group small paragraphs into ~400-800 character chunks
+                        if current_length + len(para) > 600 and current_chunk:
+                            chunk_text = "\n\n".join(current_chunk)
+                            self.chunks.append(DocumentChunk(content=chunk_text, source=source_name))
+                            current_chunk = [para]
+                            current_length = len(para)
+                        else:
+                            current_chunk.append(para)
+                            current_length += len(para)
+
+                    if current_chunk:
                         chunk_text = "\n\n".join(current_chunk)
                         self.chunks.append(DocumentChunk(content=chunk_text, source=source_name))
-                        current_chunk = [para]
-                        current_length = len(para)
-                    else:
-                        current_chunk.append(para)
-                        current_length += len(para)
 
-                if current_chunk:
-                    chunk_text = "\n\n".join(current_chunk)
-                    self.chunks.append(DocumentChunk(content=chunk_text, source=source_name))
+                except Exception as e:
+                    print(f"[RAG] Error reading {file_path}: {e}")
 
-            except Exception as e:
-                print(f"[RAG] Error reading {file_path}: {e}")
+        if not self.chunks:
+            # Load default knowledge chunks if directory not found
+            self.chunks.append(DocumentChunk(content=DEFAULT_FALLBACK_TEXT.strip(), source="Hammad Profile"))
+            full_texts.append(DEFAULT_FALLBACK_TEXT.strip())
 
         self.full_context = "\n\n".join(full_texts)
         print(f"[RAG] Indexed {len(self.chunks)} knowledge chunks from {self.data_dir}")
@@ -138,7 +161,6 @@ class PortfolioKnowledgeBase:
 
         query_tokens = [t.lower() for t in re.findall(r"\w+", query) if len(t) > 2]
         if not query_tokens:
-            # Return high-level summary or full context
             return {
                 "context": self.full_context[:4000],
                 "sources": list(dict.fromkeys(c.source for c in self.chunks[:top_k]))
@@ -161,13 +183,11 @@ class PortfolioKnowledgeBase:
             for token in query_tokens:
                 if token in content_lower:
                     matches += 1
-                    # Give higher weight to rarer/longer terms
                     score += 2.0 + min(len(token) * 0.2, 2.0)
                     if token in chunk.words:
                         score += 1.0
 
             if matches > 0:
-                # Add ratio bonus
                 score += (matches / len(query_tokens)) * 5.0
                 scored_chunks.append((score, chunk))
 
@@ -175,7 +195,6 @@ class PortfolioKnowledgeBase:
         top_chunks = [chunk for _, chunk in scored_chunks[:top_k]]
 
         if not top_chunks:
-            # Fallback to general context
             return {
                 "context": self.full_context[:5000],
                 "sources": list(dict.fromkeys(c.source for c in self.chunks[:3]))
@@ -187,20 +206,28 @@ class PortfolioKnowledgeBase:
         return {"context": retrieved_context, "sources": sources}
 
 
-# Initialize Knowledge Base instantly
+# Initialize Knowledge Base
 knowledge_base = PortfolioKnowledgeBase(DATA_DIR)
 
 
 # -----------------------------
 # Direct Gemini API Caller
 # -----------------------------
+def get_configured_api_key() -> str:
+    return (
+        os.getenv("GOOGLE_API_KEY", "").strip()
+        or os.getenv("GEMINI_API_KEY", "").strip()
+        or GOOGLE_API_KEY
+    )
+
+
 def call_gemini_api(prompt: str, system_instruction: str) -> Dict[str, Any]:
     """Calls Gemini REST API with automated fallback across candidate models."""
-    api_key = os.getenv("GOOGLE_API_KEY", "").strip() or GOOGLE_API_KEY
+    api_key = get_configured_api_key()
     if not api_key:
         raise HTTPException(
             status_code=500,
-            detail="Google API key is not configured in .env file."
+            detail="Google Gemini API key is not configured. Please set GOOGLE_API_KEY in .env or environment variables."
         )
 
     payload = {
@@ -246,8 +273,9 @@ def call_gemini_api(prompt: str, system_instruction: str) -> Dict[str, Any]:
             err_body = e.read().decode("utf-8", errors="ignore")
             print(f"[Gemini API] Model {model_name} HTTP {e.code}: {err_body}")
             if e.code == 429:
-                # Quota exceeded
-                last_error = f"API Quota exceeded (HTTP 429). Please check API limits."
+                last_error = "API Quota reached (HTTP 429). Please try again shortly."
+            elif e.code == 404:
+                last_error = f"Model {model_name} not found, trying next available model."
             else:
                 last_error = f"HTTP {e.code} on {model_name}: {err_body}"
         except Exception as e:
@@ -266,7 +294,7 @@ def generate_rag_answer(user_query: str) -> dict:
     context_text = retrieval_res["context"]
     sources = retrieval_res["sources"]
 
-    system_instruction = f"""You are the personal AI assistant on Muhammad Hammad Imran's portfolio website (he goes by Hammad).
+    system_instruction = f"""You are the personal AI assistant on Muhammad Hammad Imran's portfolio website.
 Your goal is to answer visitor questions accurately, professionally, and warmly based on his portfolio information.
 
 Key Guidelines:
@@ -293,7 +321,7 @@ Portfolio Context:
 # -----------------------------
 @app.get("/")
 def read_root():
-    api_key_set = bool(os.getenv("GOOGLE_API_KEY", "").strip() or GOOGLE_API_KEY)
+    api_key_set = bool(get_configured_api_key())
     return {
         "status": "online",
         "service": "Hammad's Portfolio RAG Chatbot API",
@@ -305,7 +333,7 @@ def read_root():
 
 @app.get("/health")
 def health_check():
-    api_key_set = bool(os.getenv("GOOGLE_API_KEY", "").strip() or GOOGLE_API_KEY)
+    api_key_set = bool(get_configured_api_key())
     return {
         "status": "healthy",
         "api_key_configured": api_key_set,

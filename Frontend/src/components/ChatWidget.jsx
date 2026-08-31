@@ -31,7 +31,7 @@ const ChatWidget = () => {
     );
 
     // -----------------------------
-    // API URL
+    // API URL Resolution
     // -----------------------------
     const getApiUrl = () => {
         // Explicit API URL from environment variable (if provided)
@@ -40,13 +40,8 @@ const ChatWidget = () => {
             return base.endsWith('/chat') ? base : `${base}/chat`;
         }
 
-        // On deployed production site (Vercel serverless function on same domain)
-        if (import.meta.env?.PROD) {
-            return '/chat';
-        }
-
-        // Default local development backend
-        return 'http://localhost:8000/chat';
+        // Relative endpoint: works on deployed site (Vercel rewrite) and local dev (Vite proxy)
+        return '/chat';
     };
 
     // -----------------------------
@@ -129,20 +124,41 @@ const ChatWidget = () => {
 
         try {
             const apiUrl = getApiUrl();
-
             console.log('Sending request to:', apiUrl);
 
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
-                body: JSON.stringify({
-                    query: text,
-                    session_id: sessionId,
-                }),
-            });
+            let response;
+            try {
+                response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: text,
+                        session_id: sessionId,
+                    }),
+                });
+            } catch (networkErr) {
+                // If relative /chat fails in dev, try direct backend URL on local host
+                if (apiUrl === '/chat' && !import.meta.env?.PROD) {
+                    const fallbackUrl = `http://${window.location.hostname || 'localhost'}:8000/chat`;
+                    console.log('Retrying with direct fallback:', fallbackUrl);
+                    response = await fetch(fallbackUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Accept: 'application/json',
+                        },
+                        body: JSON.stringify({
+                            query: text,
+                            session_id: sessionId,
+                        }),
+                    });
+                } else {
+                    throw networkErr;
+                }
+            }
 
             // Try to read JSON even when the response is an error
             let data = null;
