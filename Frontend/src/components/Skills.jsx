@@ -1,300 +1,284 @@
 import React, { useState } from 'react';
-import { Code, Wrench, Brain, Users } from 'lucide-react';
-import { portfolioData } from '../data/portfolioData';
+import './SkillsCabinet.css';
 
-function SkillCard({ group, idx }) {
-  const [transform, setTransform] = useState('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
-  const [glare, setGlare] = useState({ opacity: 0, x: 50, y: 50 });
+// 6 Curated Technical Drawers based on Muhammad Hammad Imran's Genuine Skillset & Experience
+const DRAWERS = [
+  {
+    id: 'ai-rag',
+    label: 'AI & RAG PIPELINES',
+    c: '#FF4D6D',
+    items: [
+      ['LangChain & Gemini', 'Document chunking, vector chains, API prompt orchestration.', 3],
+      ['RAG Architecture', 'Document vector indexing, retrieval grounding & low latency.', 3],
+      ['Vector DBs & Embeddings', 'Chroma DB, all-MiniLM & Gemini embeddings for similarity search.', 3],
+      ['Voice AI & Speech', 'Real-time STT & TTS integration for interactive voice assistants.', 2]
+    ]
+  },
+  {
+    id: 'languages',
+    label: 'CORE LANGUAGES',
+    c: '#F59E0B',
+    items: [
+      ['Python', 'AI workflows, LangChain pipelines, backend scripts & automation.', 3],
+      ['JavaScript (ES6+)', 'Modern asynchronous web apps, event-driven DOM & fetch APIs.', 3],
+      ['Java', 'OOP design patterns, reservation systems & robust file handling.', 2],
+      ['C Language', 'Memory pointers, data structures, recursion & binary data files.', 2]
+    ]
+  },
+  {
+    id: 'web-interfaces',
+    label: 'WEB & INTERFACES',
+    c: '#10B981',
+    items: [
+      ['React.js', 'Modular component systems, reactive state, custom hooks.', 3],
+      ['Responsive UI / UX', 'Cross-browser fluid layouts, CSS Grid, Flexbox & micro-interactions.', 3],
+      ['REST API Integration', 'Async client-server data synchronization with fallback safety.', 3],
+      ['Interactive Chat UIs', 'Streaming AI responses, context cards & conversational widgets.', 3]
+    ]
+  },
+  {
+    id: 'systems-data',
+    label: 'SYSTEMS & DATA',
+    c: '#06B6D4',
+    items: [
+      ['Data Structures', 'Arrays, linked lists, trees, hash maps & search algorithms.', 3],
+      ['OOP Architecture', 'Encapsulation, inheritance, polymorphism for clean modularity.', 3],
+      ['File Persistence', 'Structured data serialization, file I/O & state integrity.', 2],
+      ['Algorithms & Optimization', 'Sorting algorithms, recursive problem solving & time complexity.', 2]
+    ]
+  },
+  {
+    id: 'tooling-devops',
+    label: 'TOOLING & DEVOPS',
+    c: '#8B5CF6',
+    items: [
+      ['Git & GitHub', 'Version control, semantic commit hygiene & branch management.', 3],
+      ['GitHub Actions', 'Automated CI workflows, cron-based tasks & Python deployments.', 2],
+      ['VS Code & Debugging', 'Virtual environments, profiling, linting & rapid prototyping.', 3],
+      ['Linux Mint & Bash', 'Shell scripting, environment variables & package management.', 2]
+    ]
+  },
+  {
+    id: 'engineering-craft',
+    label: 'ENGINEERING CRAFT',
+    c: '#EC4899',
+    items: [
+      ['Problem Solving', 'Deconstructing complex bugs, root-cause analysis & clean fixes.', 3],
+      ['Technical Documentation', 'Clear architectural READMEs, code comments & API contracts.', 3],
+      ['Continuous Learning', 'Exploring bleeding-edge AI models, libraries & software patterns.', 3],
+      ['Collaboration', 'Peer code reviews, design communication & knowledge sharing.', 2]
+    ]
+  }
+];
 
-  const handleMouseMove = (e) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    
-    // Tilt calculations
-    const rotateX = ((y - centerY) / centerY) * -10; 
-    const rotateY = ((x - centerX) / centerX) * 10;  
-    
-    setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`);
-    setGlare({
-      opacity: 0.22,
-      x: (x / rect.width) * 100,
-      y: (y / rect.height) * 100
-    });
+export default function Skills() {
+  // Keep the first drawer open by default as an interactive visual invitation
+  const [openDrawers, setOpenDrawers] = useState([0]);
+
+  const toggleDrawer = (index) => {
+    setOpenDrawers((prev) =>
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+    );
   };
 
-  const handleMouseLeave = () => {
-    setTransform('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
-    setGlare({ opacity: 0, x: 50, y: 50 });
+  const allOpen = openDrawers.length === DRAWERS.length;
+
+  const toggleAll = () => {
+    if (allOpen) {
+      setOpenDrawers([]);
+    } else {
+      setOpenDrawers(DRAWERS.map((_, i) => i));
+    }
   };
 
   return (
-    <div
-      className="liquid-glass-card tech-stack-3d-card"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        padding: '32px',
-        borderRadius: '20px',
-        transform: transform,
-        transformStyle: 'preserve-3d',
-        transition: 'transform 0.15s ease-out, box-shadow 0.3s ease, border-color 0.3s ease',
-        position: 'relative',
-        overflow: 'hidden',
-        boxShadow: '0 12px 36px rgba(0, 0, 0, 0.6)',
-        willChange: 'transform'
-      }}
-    >
-      {/* Background Image with Dark Overlay */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundImage: `linear-gradient(to bottom, rgba(17, 17, 24, 0.85), rgba(8, 8, 10, 0.94)), url(${group.bgImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          opacity: 0.65,
-          transition: 'opacity 0.3s ease, transform 0.5s ease',
-          pointerEvents: 'none',
-          zIndex: 0
-        }}
-      />
-
-      {/* 3D Dynamic Light Reflection Glare */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255, 255, 255, ${glare.opacity}), transparent 65%)`,
-          pointerEvents: 'none',
-          transition: 'opacity 0.3s ease',
-          zIndex: 1
-        }}
-      />
-
-      {/* Header with 3D Depth */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginBottom: '24px',
-          paddingBottom: '16px',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
-          transform: 'translateZ(25px)',
-          transformStyle: 'preserve-3d',
-          position: 'relative',
-          zIndex: 2
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          <div
-            className="animated-3d-icon"
-            style={{
-              padding: '10px',
-              backgroundColor: 'rgba(255, 255, 255, 0.12)',
-              backdropFilter: 'blur(8px)',
-              borderRadius: '10px',
-              display: 'flex',
-              alignItems: 'center',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
-              transform: 'translateZ(15px)'
-            }}
-          >
-            {group.icon}
+    <section id="skills" className="section skills-cabinet-section" aria-label="Skills Workshop Cabinet">
+      <div className="skills-cabinet-container">
+        {/* Section Header with Quick Action */}
+        <div className="skills-header-row">
+          <div className="skills-header-info">
+            <div className="editorial-badge" style={{ marginBottom: '14px' }}>
+              <span className="editorial-line"></span>
+              <span className="label-caps">03 / TECHNICAL CAPABILITIES</span>
+            </div>
+            <h2
+              className="section-editorial-title"
+              style={{
+                fontFamily: "'Big Shoulders Display', 'Montserrat', Impact, sans-serif",
+                fontSize: 'clamp(42px, 7vw, 76px)',
+                lineHeight: 0.95,
+                fontWeight: 900,
+                letterSpacing: '0.02em',
+                color: '#FFFFFF',
+                margin: '0 0 14px'
+              }}
+            >
+              WHAT'S IN THE DRAWERS
+            </h2>
+            <p
+              className="body-large"
+              style={{
+                fontFamily: "'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif",
+                color: '#A0A0AC',
+                fontSize: '16.5px',
+                lineHeight: 1.55,
+                margin: 0,
+                maxWidth: '56ch'
+              }}
+            >
+              Skills organized the way a master workshop sorts precision hardware: by what they do,
+              not by how impressive they sound. Pull a drawer to inspect what's inside and how often I reach for it.
+            </p>
           </div>
-          <div>
-            <h3 style={{ fontSize: '1.35rem', fontFamily: 'var(--font-serif)', fontWeight: 400, color: '#FFF' }}>
-              {group.title}
-            </h3>
-            <span style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)' }}>
-              {group.subtitle}
+
+          <div className="cabinet-actions">
+            <button
+              type="button"
+              className="cabinet-btn"
+              onClick={toggleAll}
+              aria-label={allOpen ? 'Close all drawers' : 'Pull all drawers'}
+            >
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                {allOpen ? (
+                  <>
+                    <polyline points="18 15 12 9 6 15" />
+                    <line x1="12" y1="9" x2="12" y2="21" />
+                  </>
+                ) : (
+                  <>
+                    <polyline points="6 9 12 15 18 9" />
+                    <line x1="12" y1="3" x2="12" y2="15" />
+                  </>
+                )}
+              </svg>
+              <span>{allOpen ? 'CLOSE ALL' : 'PULL ALL DRAWERS'}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Master Physical 3D Cabinet */}
+        <div className="cabinet-chassis" role="group" aria-label="Skill drawers parts cabinet">
+          {DRAWERS.map((drawer, n) => {
+            const isOpen = openDrawers.includes(n);
+
+            return (
+              <div
+                key={drawer.id}
+                className={`cabinet-slot ${isOpen ? 'open' : ''}`}
+                style={{ '--c': drawer.c }}
+              >
+                {/* Dark Inner Cavity */}
+                <div className="cabinet-cavity" />
+
+                {/* 3D Sliding Drawer */}
+                <div className="cabinet-box">
+                  {/* Left & Right 3D Side Walls */}
+                  <div className="cabinet-side l" />
+                  <div className="cabinet-side r" />
+
+                  {/* 3D Drawer Floor & Vertical Card Wall */}
+                  <div className="cabinet-floor">
+                    <div className="cabinet-wall">
+                      {drawer.items.map((item, i) => (
+                        <div
+                          key={item[0]}
+                          className="cabinet-card"
+                          style={{ '--i': i }}
+                        >
+                          <b title={item[0]}>{item[0]}</b>
+                          <span title={item[1]}>{item[1]}</span>
+                          <div
+                            className="cabinet-wear"
+                            role="img"
+                            aria-label={`Wear frequency: ${item[2]} of 3`}
+                          >
+                            {[1, 2, 3].map((k) => (
+                              <i
+                                key={k}
+                                className={k <= item[2] ? 'on' : ''}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Tactile Front Face Plate & Handle */}
+                  <button
+                    type="button"
+                    className="cabinet-face"
+                    onClick={() => toggleDrawer(n)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleDrawer(n);
+                      }
+                    }}
+                    aria-expanded={isOpen}
+                    aria-label={`${drawer.label} drawer: ${drawer.items.length} tools. ${isOpen ? 'Click to close' : 'Click to open'}`}
+                  >
+                    <span className="cabinet-plate">{drawer.label}</span>
+                    <span className="cabinet-pull" />
+                    <span className="cabinet-count">
+                      {drawer.items.length}
+                      <small>tools</small>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Workshop Legend */}
+        <div className="cabinet-legend">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontWeight: 600, color: '#FFFFFF', letterSpacing: '0.02em' }}>
+              DOT WEAR RATING:
+            </span>
+            <span>Usage frequency across active builds</span>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+            <span className="legend-item">
+              <span className="cabinet-wear" style={{ margin: 0, '--c': '#10B981' }}>
+                <i className="on" />
+                <i className="on" />
+                <i className="on" />
+              </span>
+              <span>Daily production weapon</span>
+            </span>
+
+            <span className="legend-item">
+              <span className="cabinet-wear" style={{ margin: 0, '--c': '#06B6D4' }}>
+                <i className="on" />
+                <i className="on" />
+                <i></i>
+              </span>
+              <span>Frequent project core</span>
+            </span>
+
+            <span className="legend-item">
+              <span className="cabinet-wear" style={{ margin: 0, '--c': '#F59E0B' }}>
+                <i className="on" />
+                <i></i>
+                <i></i>
+              </span>
+              <span>Specialized / on-demand</span>
             </span>
           </div>
         </div>
-
-        <span
-          style={{
-            fontSize: '0.725rem',
-            fontFamily: 'var(--font-mono)',
-            color: '#FFFFFF',
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-            backdropFilter: 'blur(6px)',
-            border: '1px solid rgba(255, 255, 255, 0.25)',
-            padding: '4px 10px',
-            borderRadius: '12px',
-            fontWeight: 600,
-            transform: 'translateZ(15px)',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
-          }}
-        >
-          {group.badge}
-        </span>
       </div>
-
-      {/* 3D Floating Skill Tags */}
-      <div 
-        style={{ 
-          display: 'flex', 
-          flexWrap: 'wrap', 
-          gap: '12px',
-          transform: 'translateZ(35px)',
-          transformStyle: 'preserve-3d',
-          position: 'relative',
-          zIndex: 2
-        }}
-      >
-        {group.items.map((skill, sIdx) => (
-          <div
-            key={skill}
-            className="skill-chip-3d"
-            style={{
-              fontSize: '0.875rem',
-              fontWeight: 600,
-              padding: '10px 18px',
-              backgroundColor: 'rgba(8, 8, 10, 0.75)',
-              backdropFilter: 'blur(12px)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              borderRadius: '24px',
-              color: 'var(--color-text)',
-              transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-              cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)',
-              animation: `float3D 3.5s ease-in-out ${sIdx * 0.3}s infinite alternate`
-            }}
-          >
-            <span 
-              style={{ 
-                width: '6px', 
-                height: '6px', 
-                borderRadius: '50%', 
-                backgroundColor: 'rgba(255, 245, 230, 0.95)', 
-                boxShadow: '0 0 6px rgba(255, 245, 230, 0.8)',
-                display: 'inline-block' 
-              }} 
-            />
-            {skill}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-export default function Skills() {
-  const { skills } = portfolioData;
-
-  const skillGroups = [
-    {
-      title: "Main Weapons",
-      badge: "LANGUAGES",
-      subtitle: "Languages I write code in daily",
-      icon: <Code size={20} color="#FFFFFF" />,
-      items: skills.languages,
-      bgImage: "/images/skills_languages.png"
-    },
-    {
-      title: "Battle Station",
-      badge: "TOOLS & PLATFORMS",
-      subtitle: "Tools & platforms I command",
-      icon: <Wrench size={20} color="#FFFFFF" />,
-      items: skills.tools,
-      bgImage: "/images/skills_tools.png"
-    },
-    {
-      title: "Brain Fuel",
-      badge: "CONCEPTS",
-      subtitle: "CS concepts & software architecture",
-      icon: <Brain size={20} color="#FFFFFF" />,
-      items: skills.concepts,
-      bgImage: "/images/skills_concepts.png"
-    },
-    {
-      title: "Human OS",
-      badge: "SOFT SKILLS",
-      subtitle: "Collaboration & engineering mindset",
-      icon: <Users size={20} color="#FFFFFF" />,
-      items: skills.professional,
-      bgImage: "/images/skills_softskills.png"
-    }
-  ];
-
-  return (
-    <section id="skills" className="section" style={{ backgroundColor: 'transparent', perspective: '1200px' }}>
-      <div className="container">
-        {/* Section Header */}
-        <div style={{ marginBottom: '48px' }}>
-          <div className="editorial-badge">
-            <span className="editorial-line"></span>
-            <span className="label-caps">03 / TECHNICAL CAPABILITIES</span>
-          </div>
-          <h2 className="section-editorial-title" style={{ fontWeight: 800 }}>
-            MY TECH STACK
-          </h2>
-          <p className="body-large" style={{ marginTop: '12px', maxWidth: '640px' }}>
-            Structured breakdown of programming languages, tools & platforms, computer science concepts, and soft skills.
-          </p>
-        </div>
-
-        {/* 4 Skill Category Cards Grid */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr',
-            gap: '32px'
-          }}
-          className="skills-sassy-grid"
-        >
-          {skillGroups.map((group, idx) => (
-            <SkillCard key={idx} group={group} idx={idx} />
-          ))}
-        </div>
-      </div>
-
-      <style>{`
-        @media (min-width: 768px) {
-          .skills-sassy-grid { grid-template-columns: 1fr 1fr !important; }
-        }
-
-        @keyframes float3D {
-          0% {
-            transform: translateZ(20px) translateY(0px);
-          }
-          100% {
-            transform: translateZ(35px) translateY(-5px);
-          }
-        }
-
-        .skill-chip-3d:hover {
-          background-color: #FFFFFF !important;
-          color: #08080A !important;
-          border-color: #FFFFFF !important;
-          transform: translateZ(55px) scale(1.1) !important;
-          box-shadow: 0 14px 28px rgba(255, 255, 255, 0.25), 0 0 20px rgba(255, 245, 230, 0.5) !important;
-        }
-
-        .animated-3d-icon {
-          animation: pulseIcon 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes pulseIcon {
-          0% { transform: translateZ(15px) scale(1); }
-          100% { transform: translateZ(28px) scale(1.12) rotateZ(5deg); }
-        }
-      `}</style>
     </section>
   );
 }

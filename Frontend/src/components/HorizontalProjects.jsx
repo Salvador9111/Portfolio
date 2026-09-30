@@ -63,8 +63,8 @@ export default function HorizontalProjects() {
       const AY = window.innerHeight * 0.18;  // vertical height of the lobe
       const AZ = 320;                         // depth pop (pixels of perspective)
 
-      const cardW = 290;
-      const cardH = 430;
+      const _cardW = 290;
+      const _cardH = 430;
 
       let closestZ = -Infinity;
       let closestIdx = 0;

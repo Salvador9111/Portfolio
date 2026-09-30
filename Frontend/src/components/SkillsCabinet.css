@@ -1,0 +1,497 @@
+/* ==========================================================================
+   WORKSHOP SKILLS CABINET - STEALTH GUNMETAL & OBSIDIAN STEEL THEME
+   3D Physical Workshop Parts Cabinet with Realistic Mechanical Pull Drawers
+   ========================================================================== */
+
+:root {
+  --cab-bg-frame: #16161D;
+  --cab-frame-border: #2B2C38;
+  --cab-frame-shadow: rgba(0, 0, 0, 0.85);
+  --cab-face-hi: #252632;
+  --cab-face-lo: #181922;
+  --cab-face-border: #323344;
+  --cab-cavity: #08080C;
+  --cab-floor: #12131A;
+  --cab-side: #1A1B24;
+  --cab-card-bg: #1B1C26;
+  --cab-card-border: #2C2D3C;
+  --cab-card-ink: #FFFFFF;
+  --cab-card-muted: #9E9EB2;
+  --cab-dot-off: #2E2F3F;
+  --cab-pull-hi: #FFFFFF;
+  --cab-pull-mid: #B4B9C4;
+  --cab-pull-lo: #585D6B;
+  --cab-push: 140px;
+  --cab-D: 190px;
+}
+
+/* Skills Section Wrapper */
+.skills-cabinet-section {
+  position: relative;
+  background-color: transparent;
+  perspective: 1500px;
+  overflow: visible;
+}
+
+.skills-cabinet-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Section Header & Top Bar */
+.skills-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 36px;
+}
+
+.skills-header-info {
+  max-width: 620px;
+}
+
+.cabinet-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cabinet-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: #FFFFFF;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.825rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+}
+
+.cabinet-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+}
+
+.cabinet-btn:active {
+  transform: translateY(0);
+}
+
+/* The Master Cabinet Chassis */
+.cabinet-chassis {
+  background: var(--cab-bg-frame);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow:
+    inset 0 0 0 2px var(--cab-frame-border),
+    inset 0 2px 4px rgba(255, 255, 255, 0.08),
+    0 24px 50px -15px var(--cab-frame-shadow),
+    0 0 30px rgba(0, 0, 0, 0.6);
+  perspective: 1500px;
+  perspective-origin: 50% -110%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+/* Individual Drawer Slot */
+.cabinet-slot {
+  position: relative;
+  height: 68px;
+  margin-bottom: 10px;
+  transform-style: preserve-3d;
+  transition: margin-bottom 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cabinet-slot:last-child {
+  margin-bottom: 0;
+}
+
+.cabinet-slot.open {
+  margin-bottom: var(--cab-push);
+}
+
+/* Recessed interior cavity */
+.cabinet-cavity {
+  position: absolute;
+  inset: 0;
+  background: var(--cab-cavity);
+  border-radius: 6px;
+  box-shadow: 
+    inset 0 8px 16px rgba(0, 0, 0, 0.95),
+    inset 0 0 10px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  pointer-events: none;
+}
+
+/* 3D Sliding Drawer Box */
+.cabinet-box {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: translateZ(0);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.cabinet-slot.open .cabinet-box {
+  transform: translateZ(var(--cab-D));
+}
+
+/* Drawer Face Button */
+.cabinet-face {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+  background: linear-gradient(180deg, var(--cab-face-hi) 0%, var(--cab-face-lo) 100%);
+  border-radius: 6px;
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -2.5px 0 rgba(0, 0, 0, 0.6),
+    0 2px 5px rgba(0, 0, 0, 0.5),
+    0 0 0 1px var(--cab-face-border);
+  transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  user-select: none;
+  z-index: 5;
+}
+
+.cabinet-face:hover {
+  background: linear-gradient(180deg, #2D2E3C 0%, #1D1E28 100%);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -2.5px 0 rgba(0, 0, 0, 0.6),
+    0 4px 10px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+.cabinet-face:focus-visible {
+  outline: 2px solid var(--c);
+  outline-offset: 3px;
+}
+
+/* Color Identity Plate */
+.cabinet-plate {
+  background: var(--c);
+  color: #FFFFFF;
+  padding: 7px 13px 6px;
+  border-radius: 4px;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  box-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+}
+
+/* Machined Alloy Pull Handle */
+.cabinet-pull {
+  justify-self: center;
+  width: min(38%, 150px);
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, var(--cab-pull-hi) 0%, var(--cab-pull-mid) 40%, var(--cab-pull-lo) 100%);
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.cabinet-face:hover .cabinet-pull {
+  filter: brightness(1.1);
+  transform: scaleY(1.08);
+}
+
+/* Drawer Tool Count */
+.cabinet-count {
+  font-family: 'Big Shoulders Display', Impact, sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 1;
+  color: #FFFFFF;
+  display: flex;
+  align-items: baseline;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.cabinet-count small {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: #9A9AB0;
+  margin-left: 6px;
+  text-transform: lowercase;
+  letter-spacing: normal;
+}
+
+/* Drawer 3D Floor & Walls */
+.cabinet-floor,
+.cabinet-side {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.cabinet-slot.open .cabinet-floor,
+.cabinet-slot.open .cabinet-side {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.45s ease 0.15s;
+}
+
+.cabinet-floor {
+  transform-style: preserve-3d;
+  left: 0;
+  top: 68px;
+  width: 100%;
+  height: var(--cab-D);
+  background: var(--cab-floor);
+  transform-origin: top;
+  transform: rotateX(-90deg);
+  box-shadow:
+    inset 0 0 35px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  border-radius: 0 0 4px 4px;
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.cabinet-side {
+  width: var(--cab-D);
+  height: 35px;
+  top: 33px;
+  background: var(--cab-side);
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.7);
+}
+
+.cabinet-side.l {
+  left: 0;
+  transform-origin: left;
+  transform: rotateY(90deg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cabinet-side.r {
+  right: 0;
+  transform-origin: right;
+  transform: rotateY(-90deg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Card Tray Interior Wall */
+.cabinet-wall {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -10px;
+  height: 125px;
+  padding: 0 14px;
+  display: flex;
+  gap: 12px;
+  transform-origin: bottom;
+  transform: rotateX(90deg);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cabinet-slot.open .cabinet-wall {
+  opacity: 1;
+  transition: opacity 0.5s ease 0.3s;
+}
+
+/* Skill Cards inside the Drawer */
+.cabinet-card {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--cab-card-bg);
+  color: var(--cab-card-ink);
+  border-radius: 5px 5px 0 0;
+  padding: 11px 13px 10px;
+  border: 1px solid var(--cab-card-border);
+  border-top: 4px solid var(--c);
+  box-shadow: 
+    0 4px 14px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: translateY(28px);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease, border-color 0.2s ease;
+}
+
+.cabinet-card:hover {
+  background: #222330;
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-3px) scale(1.02);
+}
+
+.cabinet-slot.open .cabinet-card {
+  transform: none;
+  transition-delay: calc(var(--i) * 75ms + 320ms);
+}
+
+.cabinet-card b {
+  font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+  font-size: 14.5px;
+  line-height: 1.25;
+  margin-bottom: 4px;
+  color: #FFFFFF;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cabinet-card span {
+  font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--cab-card-muted);
+  font-size: 12px;
+  line-height: 1.4;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Wear Indicator Dots */
+.cabinet-wear {
+  display: flex;
+  gap: 5px;
+  margin-top: 8px;
+  align-items: center;
+}
+
+.cabinet-wear i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cab-dot-off);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cabinet-wear i.on {
+  background: var(--c);
+  box-shadow: 0 0 7px var(--c);
+}
+
+/* Workshop Legend at the Bottom */
+.cabinet-legend {
+  margin-top: 24px;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 13.5px;
+  color: #8E8EA0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Responsive Mobile Rules */
+@media (max-width: 768px) {
+  :root {
+    --cab-push: 160px;
+    --cab-D: 155px;
+  }
+  
+  .cabinet-wall {
+    flex-wrap: wrap;
+    top: -24px;
+    height: 115px;
+    align-content: flex-end;
+    gap: 8px;
+    padding: 0 8px;
+  }
+  
+  .cabinet-card {
+    flex: 0 0 calc(50% - 4px);
+    height: 56px;
+    padding: 6px 8px;
+  }
+  
+  .cabinet-card b {
+    font-size: 12.5px;
+    margin-bottom: 2px;
+  }
+  
+  .cabinet-card span {
+    display: none;
+  }
+  
+  .cabinet-pull {
+    display: none;
+  }
+  
+  .cabinet-face {
+    grid-template-columns: 1fr auto;
+    padding: 0 14px;
+  }
+  
+  .cabinet-plate {
+    font-size: 11.5px;
+    padding: 5px 9px;
+  }
+  
+  .cabinet-count {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cabinet-legend {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cabinet-slot,
+  .cabinet-box,
+  .cabinet-card,
+  .cabinet-floor,
+  .cabinet-side,
+  .cabinet-wall {
+    transition-duration: 0.01s !important;
+    transition-delay: 0s !important;
+  }
+}
