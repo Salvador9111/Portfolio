@@ -2,25 +2,36 @@ import React, { useState, useRef } from 'react';
 import { ExternalLink } from 'lucide-react';
 import './CertificatesDeck.css';
 
-// 6 Verified Certifications with Standardized 1200x850 Real Pictures
+// 8 Verified Certifications with Standardized 1200x850 Real Pictures & 2026 Completion Dates
 const CERTS = [
   {
     id: "ms-genai",
     title: "Career Essentials in Generative AI",
     issuer: "Microsoft",
-    year: 2024,
-    date: "August 2024",
+    year: 2026,
+    date: "June 2026",
     code: "MS-GENAI-3023",
     tone: "#D4AF37", // Imperial Gold
     image: "/images/certificates/cert_microsoft_genai.png",
     url: "https://www.linkedin.com/learning/certificates/3023f0c72912ba13ffcc2c8c6b13c9f598aa6d4a2196e05fa8fc37510297d3ab"
   },
   {
+    id: "mongodb-rag",
+    title: "RAG with MongoDB",
+    issuer: "MongoDB",
+    year: 2026,
+    date: "Sep 2026",
+    code: "MDB-RAG-35BB",
+    tone: "#00ED64", // MongoDB Emerald Green
+    image: "/images/certificates/cert_mongodb_rag.png",
+    url: "https://www.credly.com/badges/35bb55d3-411a-48c0-9d23-7bfbc06da50b"
+  },
+  {
     id: "ibm-python",
     title: "Python 101 for Data Science",
     issuer: "IBM",
-    year: 2024,
-    date: "July 2024",
+    year: 2026,
+    date: "May 2026",
     code: "IBM-CC-E334",
     tone: "#3B82F6", // Cobalt Sapphire
     image: "/images/certificates/cert_ibm_python.png",
@@ -30,19 +41,30 @@ const CERTS = [
     id: "simp-frontend",
     title: "Introduction to Front End Development",
     issuer: "Simplilearn",
-    year: 2024,
-    date: "October 2024",
-    code: "SIMP-FE-10300",
+    year: 2026,
+    date: "June 2026",
+    code: "SIMP-FE-10300174",
     tone: "#10B981", // Emerald Green
     image: "/images/certificates/cert_simplilearn_frontend.png",
     url: "https://certificates.simplicdn.net/share/10300174_10595165_1780424168270.pdf"
   },
   {
+    id: "digiskills-comm",
+    title: "Communication and Soft Skills",
+    issuer: "DigiSkills.pk",
+    year: 2026,
+    date: "July 2026",
+    code: "J5XRJBVMK",
+    tone: "#F59E0B", // Amber Gold
+    image: "/images/certificates/cert_digiskills_communication.png",
+    url: "https://digiskills.pk/verify/"
+  },
+  {
     id: "udemy-c",
     title: "C Programming For Beginners",
     issuer: "Udemy",
-    year: 2024,
-    date: "May 2024",
+    year: 2026,
+    date: "May 2026",
     code: "UC-F77DF0F9",
     tone: "#8B5CF6", // Royal Amethyst
     image: "/images/certificates/cert_udemy_c.png",
@@ -52,8 +74,8 @@ const CERTS = [
     id: "datacamp-git",
     title: "GitHub Foundations",
     issuer: "DataCamp",
-    year: 2024,
-    date: "November 2024",
+    year: 2026,
+    date: "November 2026",
     code: "DC-GH-B7569",
     tone: "#06B6D4", // Electric Cyan
     image: "/images/certificates/cert_datacamp_github.png",
@@ -63,8 +85,8 @@ const CERTS = [
     id: "helsinki-ai",
     title: "Elements of AI",
     issuer: "Univ of Helsinki",
-    year: 2024,
-    date: "December 2024",
+    year: 2026,
+    date: "June 2026",
     code: "UH-EOAI-184X",
     tone: "#F43F5E", // Ruby Crimson
     image: "/images/certificates/cert_helsinki_ai.png",
@@ -94,7 +116,8 @@ export default function Certifications() {
   };
 
   return (
-    <section id="certifications" className="section cert-section-clean" aria-labelledby="cert-heading">
+    <section id="credentials" className="section cert-section-clean" aria-labelledby="cert-heading">
+      <span id="certifications" style={{ position: 'absolute', top: 0 }} />
       <div className="cert-clean-wrap">
         {/* Section Header */}
         <div className="cert-clean-header">
@@ -202,12 +225,16 @@ export default function Certifications() {
                     }}
                     aria-label={`${c.title}, ${c.issuer}. Click to bring forward.`}
                   >
-                    <img
-                      src={c.image}
-                      alt={`${c.title} - ${c.issuer}`}
-                      className="cert-page-img"
-                      loading="lazy"
-                    />
+                    <picture style={{ width: '100%', height: '100%', display: 'block' }}>
+                      <source srcSet={c.image.replace(/\.(png|jpe?g)$/i, '.webp')} type="image/webp" />
+                      <img
+                        src={c.image}
+                        alt={`${c.title} - ${c.issuer}`}
+                        className="cert-page-img"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
                   </article>
                 );
               })}

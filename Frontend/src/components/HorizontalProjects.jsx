@@ -106,7 +106,7 @@ export default function HorizontalProjects() {
 
   return (
     <section
-      id="projects"
+      id="work"
       ref={sectionRef}
       style={{
         position: 'relative',
@@ -114,6 +114,7 @@ export default function HorizontalProjects() {
         backgroundColor: 'transparent'
       }}
     >
+      <span id="projects" style={{ position: 'absolute', top: 0 }} />
       {/* ── Sticky viewport ── */}
       <div
         style={{

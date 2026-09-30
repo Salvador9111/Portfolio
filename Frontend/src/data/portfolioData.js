@@ -143,37 +143,57 @@ export const portfolioData = {
     {
       title: "Career Essentials in Generative AI",
       issuer: "Microsoft",
-      date: "Certified",
+      year: "2026",
+      date: "June 2026",
       credentialUrl: "https://www.linkedin.com/learning/certificates/3023f0c72912ba13ffcc2c8c6b13c9f598aa6d4a2196e05fa8fc37510297d3ab"
+    },
+    {
+      title: "RAG with MongoDB",
+      issuer: "MongoDB",
+      year: "2026",
+      date: "Sept. 2026",
+      credentialUrl: "https://www.credly.com/badges/35bb55d3-411a-48c0-9d23-7bfbc06da50b"
     },
     {
       title: "Python 101 for Data Science",
       issuer: "IBM / Cognitive Class",
-      date: "Certified",
+      year: "2026",
+      date: "May 2026",
       credentialUrl: "https://courses.cognitiveclass.ai/certificates/e33414a53abd47a0b9631b4cfe4b53e0"
     },
     {
       title: "Introduction to Front End Development",
       issuer: "Simplilearn",
-      date: "Certified",
+      year: "2026",
+      date: "June 2026",
       credentialUrl: "https://certificates.simplicdn.net/share/10300174_10595165_1780424168270.pdf"
+    },
+    {
+      title: "Communication and Soft Skills",
+      issuer: "DigiSkills.pk",
+      year: "2026",
+      date: "July 2026",
+      credentialUrl: "https://digiskills.pk/verify/"
     },
     {
       title: "C Programming For Beginners",
       issuer: "Udemy",
-      date: "Certified",
+      year: "2026",
+      date: "May 2026",
       credentialUrl: "https://www.udemy.com/certificate/UC-f77df0f9-6868-49f6-a89c-70042ff9dabb/"
     },
     {
       title: "GitHub Foundations",
       issuer: "DataCamp",
-      date: "Certified",
+      year: "2026",
+      date: "Nov. 2026",
       credentialUrl: "https://www.datacamp.com/statement-of-accomplishment/track/b75695f027afb854cb11b24d35414654718bf87d?raw=1"
     },
     {
       title: "Elements of AI",
       issuer: "University of Helsinki",
-      date: "Certified",
+      year: "2026",
+      date: "June 2026",
       credentialUrl: "https://certificates.mooc.fi/validate/o184xt35tr"
     }
   ]

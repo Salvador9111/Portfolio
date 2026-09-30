@@ -92,7 +92,8 @@ export default function Skills() {
   };
 
   return (
-    <section id="skills" className="section skills-cabinet-section" aria-label="Skills Workshop Cabinet">
+    <section id="capabilities" className="section skills-cabinet-section" aria-label="Skills Workshop Cabinet">
+      <span id="skills" style={{ position: 'absolute', top: 0 }} />
       <div className="skills-cabinet-container">
         {/* Section Header with Quick Action */}
         <div className="skills-header-row">

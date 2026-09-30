@@ -7,7 +7,7 @@ export default function Hero() {
 
   return (
     <section
-      id="hero"
+      id="overview"
       className="section"
       style={{
         paddingTop: '160px',
@@ -15,6 +15,7 @@ export default function Hero() {
         position: 'relative'
       }}
     >
+      <span id="hero" style={{ position: 'absolute', top: 0 }} />
       <div className="container">
         {/* Centered Greensward Editorial Hero Text */}
         <div

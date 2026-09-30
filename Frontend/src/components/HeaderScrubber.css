@@ -1,0 +1,339 @@
+/* ==========================================================================
+   SCRUBBER NAV BAR - PRECISION DIAL & TIMELINE NAVIGATION
+   ========================================================================== */
+
+:root {
+  --scrub-ink: #070707;
+  --scrub-paper: #F4F4F4;
+  --scrub-mute: #8B8B8B;
+  --scrub-serif: 'Syne', 'Montserrat', -apple-system, sans-serif;
+  --scrub-sans: 'Hanken Grotesk', -apple-system, sans-serif;
+}
+
+.scrub-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 76px;
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  column-gap: 36px;
+  align-items: stretch;
+  padding: 0 28px;
+  background: rgba(7, 7, 7, 0.88);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  box-sizing: border-box;
+}
+
+/* Brand Mark (Left) */
+.scrub-mark {
+  align-self: center;
+  text-decoration: none !important;
+  color: var(--scrub-paper) !important;
+  display: block;
+  user-select: none;
+}
+
+.scrub-mark b {
+  display: block;
+  font-family: var(--scrub-serif);
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #FFFFFF !important;
+}
+
+.scrub-mark em {
+  display: block;
+  margin-top: 5px;
+  font-family: var(--scrub-sans);
+  font-weight: 400;
+  font-size: 12.5px;
+  color: var(--scrub-mute);
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.scrub-mark em.sw {
+  animation: scrubSw .4s cubic-bezier(.2, .8, .2, 1);
+}
+
+@keyframes scrubSw {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Center Track */
+.scrub-track {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-width: 0;
+  padding-bottom: 8px;
+}
+
+/* Label Buttons Container */
+.scrub-labels {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 28px;
+  width: 100%;
+}
+
+.scrub-labels li {
+  position: absolute;
+  top: 0;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Label Button Styling - High Precision & Perfect Spacing */
+.scrub-labels a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  font-family: var(--scrub-serif);
+  font-weight: 600;
+  font-size: 11.5px;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  color: var(--scrub-mute);
+  text-decoration: none !important;
+  white-space: nowrap;
+  background: rgba(14, 14, 18, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(244, 244, 244, 0.18);
+  border-radius: 4px;
+  transition: color .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+  user-select: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+.scrub-labels a:hover {
+  color: var(--scrub-paper) !important;
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+.scrub-labels a[aria-current="true"] {
+  background: var(--scrub-paper) !important;
+  color: var(--scrub-ink) !important;
+  border-color: var(--scrub-paper) !important;
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.scrub-labels a:focus-visible,
+.scrub-cta:focus-visible,
+.scrub-mark:focus-visible {
+  outline: 2px solid var(--scrub-paper);
+  outline-offset: 2px;
+}
+
+/* Ruler Gauge & Interactive Swell Canvas */
+.scrub-ruler {
+  position: relative;
+  height: 32px;
+  cursor: ew-resize;
+  touch-action: none;
+  user-select: none;
+}
+
+.scrub-ruler canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Scrubber Indicator Head & Diamond Tip */
+.scrub-head {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: var(--scrub-paper);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.scrub-head::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: -3px;
+  width: 7px;
+  height: 7px;
+  background: var(--scrub-paper);
+  transform: rotate(45deg);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+}
+
+/* Scrubber Head Tooltip Flag */
+.scrub-flag {
+  display: none;
+  position: absolute;
+  top: -26px;
+  left: 0;
+  padding: 3px 9px;
+  background: var(--scrub-paper);
+  color: var(--scrub-ink);
+  font-family: var(--scrub-serif);
+  font-weight: 600;
+  font-size: 11.5px;
+  white-space: nowrap;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.scrub-head.r .scrub-flag {
+  left: auto;
+  right: 0;
+}
+
+/* Right CTA Button ("Get in touch" / "Let's talk") with Expanding Corner Brackets */
+.scrub-cta {
+  --l: rgba(244, 244, 244, 0.9);
+  align-self: center;
+  position: relative;
+  overflow: hidden;
+  padding: 13px 24px;
+  color: var(--scrub-paper) !important;
+  font-family: var(--scrub-serif);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  text-decoration: none !important;
+  background:
+    linear-gradient(var(--l), var(--l)) top left/9px 1px no-repeat,
+    linear-gradient(var(--l), var(--l)) top left/1px 9px no-repeat,
+    linear-gradient(var(--l), var(--l)) top right/9px 1px no-repeat,
+    linear-gradient(var(--l), var(--l)) top right/1px 9px no-repeat,
+    linear-gradient(var(--l), var(--l)) bottom left/9px 1px no-repeat,
+    linear-gradient(var(--l), var(--l)) bottom left/1px 9px no-repeat,
+    linear-gradient(var(--l), var(--l)) bottom right/9px 1px no-repeat,
+    linear-gradient(var(--l), var(--l)) bottom right/1px 9px no-repeat;
+  transition: background-size .45s cubic-bezier(.7, 0, .2, 1), color .3s .1s;
+  cursor: pointer;
+  user-select: none;
+}
+
+.scrub-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--scrub-paper);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .45s cubic-bezier(.7, 0, .2, 1) .05s;
+}
+
+.scrub-cta .scrub-roll {
+  z-index: 1;
+}
+
+.scrub-cta:hover,
+.scrub-cta:focus-visible {
+  color: var(--scrub-ink) !important;
+  background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%, 100% 1px, 1px 100%, 100% 1px, 1px 100%;
+}
+
+.scrub-cta:hover::before,
+.scrub-cta:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.scrub-roll {
+  position: relative;
+  display: block;
+  height: 1.25em;
+  line-height: 1.25em;
+  overflow: hidden;
+}
+
+.scrub-roll span {
+  display: block;
+  transition: transform .4s cubic-bezier(.7, 0, .2, 1);
+}
+
+.scrub-cta:hover .scrub-roll span,
+.scrub-cta:focus-visible .scrub-roll span {
+  transform: translateY(-100%);
+}
+
+/* ==========================================================================
+   Responsive Mobile & Tablet Viewports
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .scrub-labels a {
+    padding: 3px 8px;
+    font-size: 10.5px;
+  }
+}
+
+@media (max-width: 900px) {
+  .scrub-bar {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 56px 46px;
+    height: 104px;
+    column-gap: 16px;
+    padding: 0 18px;
+  }
+
+  .scrub-track {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    padding-bottom: 6px;
+  }
+
+  .scrub-labels {
+    display: none;
+  }
+
+  .scrub-flag {
+    display: block;
+  }
+
+  .scrub-mark b {
+    font-size: 21px;
+  }
+
+  .scrub-mark em {
+    display: none;
+  }
+
+  .scrub-cta {
+    padding: 9px 16px;
+    font-size: 12.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrub-mark em.sw,
+  .scrub-roll span,
+  .scrub-cta::before {
+    transition: none !important;
+    animation: none !important;
+  }
+}

@@ -32,16 +32,21 @@ export default function ProjectCard({ project }) {
             marginBottom: '12px'
           }}
         >
-          <img
-            src={project.image}
-            alt={`${project.name} UI Preview`}
-            style={{
-              width: '100%',
-              height: '140px',
-              objectFit: 'cover',
-              display: 'block'
-            }}
-          />
+          <picture>
+            <source srcSet={project.image.replace(/\.(png|jpe?g)$/i, '.webp')} type="image/webp" />
+            <img
+              src={project.image}
+              alt={`${project.name} UI Preview`}
+              loading="lazy"
+              decoding="async"
+              style={{
+                width: '100%',
+                height: '140px',
+                objectFit: 'cover',
+                display: 'block'
+              }}
+            />
+          </picture>
         </div>
 
         {/* Project Title */}
