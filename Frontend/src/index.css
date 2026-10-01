@@ -415,7 +415,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Accessibility Focus States */
-a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+a:focus-visible, button:focus-visible, input:not(.chat-input):focus-visible, textarea:focus-visible {
   outline: 2px solid #FFFFFF;
   outline-offset: 3px;
 }
