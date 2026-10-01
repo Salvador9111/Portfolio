@@ -312,7 +312,7 @@ export default function Header() {
         }}
         aria-label="Hammad Imran - Return to top"
       >
-        <b>{personal.name.split(' ')[1] || 'Hammad'}</b>
+        <b>HAMMAD</b>
         <em ref={capRef} className={capSw ? 'sw' : ''}>
           {caption}
         </em>

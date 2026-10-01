@@ -38,8 +38,20 @@ export default function Projects() {
               <span className="editorial-line"></span>
               <span className="label-caps">02 / FEATURED WORKS ({projects.length})</span>
             </div>
-            <h2 className="section-editorial-title" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)' }}>
-              <strong>CASE STUDIES & <span className="text-accent">WORKING SYSTEMS</span>.</strong>
+              <h2
+                className="section-editorial-title"
+                style={{
+                  fontFamily: "'Big Shoulders Display', 'Montserrat', Impact, sans-serif",
+                  fontSize: 'clamp(36px, 5.1vw, 59px)',
+                  lineHeight: 0.98,
+                  fontWeight: 900,
+                  letterSpacing: '0.02em',
+                  color: '#FFFFFF'
+                }}
+            >
+              <strong style={{ fontWeight: 900, color: '#FFFFFF', letterSpacing: '0.02em' }}>
+                CASE STUDIES &amp; WORKING SYSTEMS.
+              </strong>
             </h2>
             <p className="body-large" style={{ marginTop: '6px', maxWidth: '580px' }}>
               Scroll, swipe, or use keyboard to explore the 3D cover flow of AI integration, web apps, and OOP systems.

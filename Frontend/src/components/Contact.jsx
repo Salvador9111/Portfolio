@@ -103,7 +103,21 @@ export default function Contact() {
           <span className="label-caps">05 / GET IN TOUCH</span>
           <span className="editorial-line"></span>
         </div>
-        <h1 className="black-book-h1">Get yourself into my little black book.</h1>
+        <h1
+          className="black-book-h1"
+          style={{
+            fontFamily: "'Big Shoulders Display', 'Montserrat', Impact, sans-serif",
+            fontSize: 'clamp(42px, 7vw, 76px)',
+            lineHeight: 0.95,
+            fontWeight: 900,
+            letterSpacing: '0.02em',
+            color: '#FFFFFF',
+            textTransform: 'uppercase',
+            margin: '0 auto 16px'
+          }}
+        >
+          Get yourself into my little black book.
+        </h1>
         <p>Selective, yes. But always curious. Tell me who you are and what you have in mind.</p>
       </header>
 

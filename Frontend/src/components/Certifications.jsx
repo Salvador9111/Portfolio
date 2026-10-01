@@ -126,7 +126,20 @@ export default function Certifications() {
             <span className="label-caps">04 / CREDENTIALS & LEARNING</span>
           </div>
 
-          <h2 id="cert-heading" className="cert-clean-h2">
+          <h2
+            id="cert-heading"
+            className="cert-clean-h2"
+            style={{
+              fontFamily: "'Big Shoulders Display', 'Montserrat', Impact, sans-serif",
+              fontSize: 'clamp(42px, 7vw, 76px)',
+              lineHeight: 0.95,
+              fontWeight: 900,
+              letterSpacing: '0.02em',
+              color: '#FFFFFF',
+              margin: '0 0 14px',
+              textTransform: 'uppercase'
+            }}
+          >
             Verified Certificates
           </h2>
 

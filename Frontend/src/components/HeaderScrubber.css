@@ -40,11 +40,12 @@
 
 .scrub-mark b {
   display: block;
-  font-family: var(--scrub-serif);
-  font-weight: 800;
-  font-size: 24px;
+  font-family: 'Unbounded', 'Arial Black', Arial, sans-serif;
+  font-weight: 900;
+  font-size: 20px;
   line-height: 1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
   color: #FFFFFF !important;
 }
 

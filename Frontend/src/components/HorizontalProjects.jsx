@@ -60,10 +60,10 @@ export default function HorizontalProjects() {
 
       // Amplitude tuning — these feel best at 1080p+ viewports
       const AX = window.innerWidth * 0.30;  // horizontal spread
-      const AY = window.innerHeight * 0.18;  // vertical height of the lobe
+      const AY = window.innerHeight * 0.08;  // vertical height of the lobe (tuned so cards stay lower)
       const AZ = 320;                         // depth pop (pixels of perspective)
 
-      const _cardW = 290;
+      const _cardW = 305;
       const _cardH = 430;
 
       let closestZ = -Infinity;
@@ -76,9 +76,9 @@ export default function HorizontalProjects() {
         const phase = anchorAngle + (i / NUM_CARDS) * TWO_PI;
         const { x, y, z } = lemniscate(phase, AX, AY, AZ);
 
-        // Map Z (-AZ..+AZ) → scale (0.55..1.0) and opacity (0.3..1.0)
+        // Map Z (-AZ..+AZ) → scale (0.50..0.94) and opacity (0.25..1.0)
         const zNorm = (z + AZ) / (2 * AZ);          // 0 (back) … 1 (front)
-        const scale = 0.55 + zNorm * 0.45;
+        const scale = 0.50 + zNorm * 0.44;
         const opacity = 0.25 + zNorm * 0.75;
 
         // zIndex so front-cards visually overlap back-cards
@@ -133,26 +133,39 @@ export default function HorizontalProjects() {
           className="container"
           style={{
             position: 'absolute',
-            top: '16px',
+            top: 'clamp(106px, 13.5vh, 126px)',
             left: '50%',
             transform: 'translateX(-50%)',
             width: '100%',
             zIndex: 200
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '20px' }}>
             <div>
               <div className="editorial-badge" style={{ marginBottom: '8px' }}>
                 <span className="editorial-line"></span>
                 <span className="label-caps">02 / FEATURED WORKS ({projects.length})</span>
               </div>
-              <h2 className="section-editorial-title" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.6rem)', margin: 0 }}>
-                <strong>CASE STUDIES & <span className="text-accent">WORKING SYSTEMS</span>.</strong>
+              <h2
+                className="section-editorial-title"
+                style={{
+                  fontFamily: "'Big Shoulders Display', 'Montserrat', Impact, sans-serif",
+                  fontSize: 'clamp(36px, 5.1vw, 59px)',
+                  lineHeight: 0.98,
+                  fontWeight: 900,
+                  letterSpacing: '0.02em',
+                  color: '#FFFFFF',
+                  margin: 0
+                }}
+              >
+                <strong style={{ fontWeight: 900, color: '#FFFFFF', letterSpacing: '0.02em' }}>
+                  CASE STUDIES &amp; WORKING SYSTEMS.
+                </strong>
               </h2>
             </div>
 
             {/* Progress indicator */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0, marginTop: '8px' }}>
               <span style={{ fontSize: '0.8rem', fontFamily: 'var(--font-mono)', color: '#FFFFFF', fontWeight: 700 }}>
                 0{activeIndex + 1} / 0{projects.length}
               </span>
@@ -181,9 +194,9 @@ export default function HorizontalProjects() {
               ref={el => cardRefs.current[i] = el}
               style={{
                 position: 'absolute',
-                top: '55%',
+                top: '73%',
                 left: '50%',
-                width: '290px',
+                width: '305px',
                 willChange: 'transform, opacity',
                 transformOrigin: 'center center'
               }}
@@ -200,6 +213,7 @@ export default function HorizontalProjects() {
             inset: 0,
             width: '100%',
             height: '100%',
+            transform: 'translateY(18%)',
             opacity: 0.06,
             pointerEvents: 'none',
             zIndex: 1

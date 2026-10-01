@@ -1,0 +1,377 @@
+/* ==========================================================================
+   MAGNETS FRIDGE DOOR FOOTER
+   ========================================================================== */
+
+:root {
+  --surf: #e3e8e1;
+  --panel: #edf1ea;
+  --ink: #111413;
+  --mute: #586059;
+  --line: #c3cbc2;
+  --dot: #b9c2b8;
+  --d: 'Unbounded', 'Arial Black', Arial, sans-serif;
+  --b: 'Figtree', 'Helvetica Neue', Arial, sans-serif;
+  --y: #ffd400;
+  --r: #e5243b;
+  --g: #2fd08a;
+  --p: #ff8fb1;
+  --w: #fbfbf8;
+  --w-ink: #111413;
+  --k: #111413;
+}
+
+/* Dark Theme Overrides: Font color white, white backgrounds become light purple,
+   box little gray, whole footer slightly black */
+:root.dark,
+:root[data-theme="dark"] {
+  --surf: #0a0a0c; /* Little slightly black for the whole footer boundary */
+  --panel: #20232a; /* A little gray for the big box with magnets */
+  --ink: #ffffff;
+  --mute: #9ea5b4;
+  --line: #353a45;
+  --dot: #444b58;
+  --w: #cbb4fc; /* Light purple for elements that had white background */
+  --w-ink: #15092e;
+  --k: #121418;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.light) {
+    --surf: #0a0a0c;
+    --panel: #20232a;
+    --ink: #ffffff;
+    --mute: #9ea5b4;
+    --line: #353a45;
+    --dot: #444b58;
+    --w: #cbb4fc;
+    --w-ink: #15092e;
+    --k: #121418;
+  }
+}
+
+:root[data-theme="light"],
+:root.light {
+  --surf: #e3e8e1;
+  --panel: #edf1ea;
+  --ink: #111413;
+  --mute: #586059;
+  --line: #c3cbc2;
+  --dot: #b9c2b8;
+  --w: #fbfbf8;
+  --w-ink: #111413;
+  --k: #111413;
+}
+
+.magnets-footer {
+  background: var(--surf);
+  color: var(--ink);
+  padding: clamp(1.5rem, 4vw, 3rem) 0 0;
+  font-family: var(--b);
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.magnets-footer .wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 clamp(0.75rem, 3vw, 2rem);
+}
+
+.magnets-footer .head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0.25rem 1.25rem;
+}
+
+.magnets-footer .head p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.95rem;
+  max-width: 38ch;
+  line-height: 1.45;
+  font-weight: 500;
+  opacity: 0.95;
+}
+
+.magnets-footer .ctrl {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.magnets-footer .btn {
+  font: 700 0.85rem var(--b);
+  border: 2px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  border-radius: 99px;
+  padding: 0.5rem 1.1rem;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, transform 0.15s, border-color 0.25s;
+  user-select: none;
+}
+
+.magnets-footer .btn:hover {
+  background: var(--ink);
+  color: var(--surf);
+}
+
+.magnets-footer .btn:active {
+  transform: scale(0.95);
+}
+
+.magnets-footer .count {
+  font: 500 0.85rem var(--b);
+  color: var(--mute);
+  min-width: 9ch;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The Metal Door */
+.magnets-footer .door {
+  position: relative;
+  background: var(--panel);
+  border-radius: 1.6rem;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background-image: radial-gradient(var(--dot) 1.2px, transparent 1.4px);
+  background-size: 18px 18px;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -6px 18px rgba(0, 0, 0, 0.2),
+    0 10px 30px rgba(0, 0, 0, 0.15);
+  touch-action: pan-y;
+  min-height: 280px;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.magnets-footer .door::after {
+  content: "";
+  position: absolute;
+  right: 1.1rem;
+  top: 22%;
+  bottom: 22%;
+  width: 0.7rem;
+  border-radius: 99px;
+  background: var(--line);
+  opacity: 0.85;
+  pointer-events: none;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+/* Draggable Magnets */
+.magnets-footer .mg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  font: 900 var(--fs, 1rem) var(--d);
+  letter-spacing: -0.03em;
+  padding: 0.35em 0.6em;
+  border-radius: 0.35em;
+  border: 0;
+  color: #111413;
+  box-shadow:
+    0 3px 0 rgba(0, 0, 0, 0.28),
+    0 6px 10px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  will-change: transform;
+}
+
+.magnets-footer .mg.anim {
+  transition: transform 0.8s cubic-bezier(0.3, 1.35, 0.5, 1), box-shadow 0.2s;
+}
+
+.magnets-footer .mg.lift {
+  cursor: grabbing;
+  box-shadow:
+    0 12px 0 rgba(0, 0, 0, 0.18),
+    0 18px 24px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+/* Magnet Colors */
+.magnets-footer .mg.y {
+  background: var(--y);
+  color: #111413;
+}
+
+.magnets-footer .mg.r {
+  background: var(--r);
+  color: #ffffff;
+}
+
+.magnets-footer .mg.g {
+  background: var(--g);
+  color: #111413;
+}
+
+.magnets-footer .mg.p {
+  background: var(--p);
+  color: #111413;
+}
+
+.magnets-footer .mg.w {
+  background: var(--w);
+  color: var(--w-ink);
+}
+
+.magnets-footer .mg.pure-white {
+  background: #ffffff !important;
+  color: var(--w-ink);
+}
+
+.magnets-footer .mg.k {
+  background: var(--k);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Font Sizes */
+.magnets-footer .big {
+  --fs: clamp(1.4rem, 5.4vw, 4.2rem);
+}
+
+.magnets-footer .sm {
+  --fs: clamp(0.85rem, 1.6vw, 1.1rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  font-family: var(--b);
+  padding: 0.55em 0.95em;
+  border-radius: 99px;
+  text-decoration: none;
+}
+
+.magnets-footer .sm svg {
+  width: 1em;
+  height: 1em;
+}
+
+/* Online Pulse Dot */
+.magnets-footer .dot {
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: 50%;
+  background: var(--g);
+  position: relative;
+  display: inline-block;
+}
+
+.magnets-footer .dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--g);
+  animation: magnetPing 1.8s ease-out infinite;
+}
+
+@keyframes magnetPing {
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* Bottom Bar */
+.magnets-footer .bar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.4rem 0.25rem 1.8rem;
+  font-size: 0.9rem;
+  color: var(--mute);
+}
+
+.magnets-footer .bar .bar-spacer {
+  /* Empty spacer to balance column 1 */
+}
+
+.magnets-footer .bar .mid {
+  grid-column: 2;
+  font: 900 clamp(1.2rem, 2.4vw, 1.6rem) var(--d);
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-align: center;
+  justify-self: center;
+}
+
+.magnets-footer .bar .r {
+  grid-column: 3;
+  display: flex;
+  gap: 0.6rem;
+  justify-content: flex-end;
+  align-items: center;
+  justify-self: end;
+}
+
+/* Toast Message */
+.magnets-footer-toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  transform: translate(-50%, 200%);
+  background: var(--k);
+  color: var(--y);
+  padding: 0.75rem 1.4rem;
+  border-radius: 99px;
+  font-weight: 700;
+  font-family: var(--b);
+  font-size: 0.9rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: transform 0.5s cubic-bezier(0.3, 1.35, 0.5, 1);
+  z-index: 99999;
+  pointer-events: none;
+}
+
+.magnets-footer-toast.show {
+  transform: translate(-50%, 0);
+}
+
+@media (max-width: 700px) {
+  .magnets-footer .bar {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  .magnets-footer .bar .bar-spacer {
+    display: none;
+  }
+  .magnets-footer .bar .mid {
+    grid-column: 1;
+    text-align: center;
+    justify-self: center;
+  }
+  .magnets-footer .bar .r {
+    grid-column: 1;
+    justify-content: center;
+    justify-self: center;
+  }
+  .magnets-footer .door::after {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magnets-footer * {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}

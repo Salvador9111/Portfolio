@@ -7,6 +7,196 @@ const QUICK_CHIPS = [
   'Get in touch'
 ];
 
+/**
+ * Formats inline markdown (bold, italic, code) and strips any stray asterisks.
+ */
+function formatInlineText(text) {
+  if (!text) return null;
+
+  const parts = [];
+  let remaining = text;
+  let keyIndex = 0;
+  const pattern = /(\*\*[^*]+\*\*|`[^`]+`|\*[^*]+\*)/g;
+  let match;
+  let lastIndex = 0;
+
+  while ((match = pattern.exec(remaining)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(remaining.substring(lastIndex, match.index));
+    }
+
+    const token = match[0];
+    if (token.startsWith('**') && token.endsWith('**')) {
+      const content = token.slice(2, -2);
+      parts.push(<strong key={keyIndex++} className="chat-bold">{content}</strong>);
+    } else if (token.startsWith('`') && token.endsWith('`')) {
+      const content = token.slice(1, -1);
+      parts.push(<code key={keyIndex++} className="chat-code">{content}</code>);
+    } else if (token.startsWith('*') && token.endsWith('*')) {
+      const content = token.slice(1, -1);
+      parts.push(<em key={keyIndex++} className="chat-italic">{content}</em>);
+    }
+    lastIndex = match.index + token.length;
+  }
+
+  if (lastIndex < remaining.length) {
+    parts.push(remaining.substring(lastIndex));
+  }
+
+  // Strip any stray unparsed asterisks from plain strings
+  return parts.map((part) => {
+    if (typeof part === 'string') {
+      return part.replace(/\*/g, '');
+    }
+    return part;
+  });
+}
+
+/**
+ * FormattedMessage parses markdown headings, bullet lists, numbered lists,
+ * and paragraphs, preventing single-paragraph collapse and removing raw asterisks.
+ */
+function FormattedMessage({ text }) {
+  if (!text) return null;
+
+  const normalized = text.replace(/\r\n/g, '\n').trim();
+  const rawLines = normalized.split('\n');
+
+  const blocks = [];
+  let currentList = null; // { type: 'ul' | 'ol', items: [] }
+  let currentParagraph = [];
+
+  const flushParagraph = () => {
+    if (currentParagraph.length > 0) {
+      const pText = currentParagraph.join(' ').trim();
+      if (pText) {
+        blocks.push({
+          type: 'p',
+          content: pText
+        });
+      }
+      currentParagraph = [];
+    }
+  };
+
+  const flushList = () => {
+    if (currentList) {
+      blocks.push(currentList);
+      currentList = null;
+    }
+  };
+
+  for (let i = 0; i < rawLines.length; i++) {
+    const line = rawLines[i].trim();
+
+    if (!line) {
+      flushParagraph();
+      flushList();
+      continue;
+    }
+
+    // Markdown Headings: ### Heading, ## Heading, # Heading
+    const headingMatch = line.match(/^(#{1,4})\s+(.+)$/);
+    if (headingMatch) {
+      flushParagraph();
+      flushList();
+      blocks.push({
+        type: 'heading',
+        level: headingMatch[1].length,
+        content: headingMatch[2].replace(/\*\*/g, '').trim()
+      });
+      continue;
+    }
+
+    // Standalone bold header line (e.g. "**Key Skills:**" or "**Education**")
+    const boldHeaderMatch = line.match(/^\*\*([^*]+)\*\*:?$/);
+    if (boldHeaderMatch && line.length < 65) {
+      flushParagraph();
+      flushList();
+      blocks.push({
+        type: 'heading',
+        level: 3,
+        content: boldHeaderMatch[1].trim()
+      });
+      continue;
+    }
+
+    // Bullet List items: * item, - item, • item, + item
+    const bulletMatch = line.match(/^[\*\-•\+]\s+(.+)$/);
+    if (bulletMatch) {
+      flushParagraph();
+      if (!currentList || currentList.type !== 'ul') {
+        flushList();
+        currentList = { type: 'ul', items: [] };
+      }
+      currentList.items.push(bulletMatch[1]);
+      continue;
+    }
+
+    // Numbered List items: 1. item, 2. item
+    const numberedMatch = line.match(/^(\d+)[\.\)]\s+(.+)$/);
+    if (numberedMatch) {
+      flushParagraph();
+      if (!currentList || currentList.type !== 'ol') {
+        flushList();
+        currentList = { type: 'ol', items: [] };
+      }
+      currentList.items.push(numberedMatch[2]);
+      continue;
+    }
+
+    // Regular line in paragraph
+    flushList();
+    currentParagraph.push(line);
+  }
+
+  flushParagraph();
+  flushList();
+
+  return (
+    <div className="chat-formatted-body">
+      {blocks.map((block, idx) => {
+        if (block.type === 'heading') {
+          return (
+            <h4 key={idx} className="chat-msg-heading">
+              {block.content}
+            </h4>
+          );
+        }
+        if (block.type === 'ul') {
+          return (
+            <ul key={idx} className="chat-msg-list">
+              {block.items.map((item, itemIdx) => (
+                <li key={itemIdx} className="chat-msg-list-item">
+                  <span className="chat-bullet" aria-hidden="true" />
+                  <span className="chat-item-text">{formatInlineText(item)}</span>
+                </li>
+              ))}
+            </ul>
+          );
+        }
+        if (block.type === 'ol') {
+          return (
+            <ol key={idx} className="chat-msg-numbered-list">
+              {block.items.map((item, itemIdx) => (
+                <li key={itemIdx} className="chat-msg-numbered-item">
+                  <span className="chat-num">{itemIdx + 1}.</span>
+                  <span className="chat-item-text">{formatInlineText(item)}</span>
+                </li>
+              ))}
+            </ol>
+          );
+        }
+        return (
+          <p key={idx} className="chat-msg-para">
+            {formatInlineText(block.content)}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -361,7 +551,13 @@ export default function ChatWidget() {
               key={`${message.type}-${index}`}
               className={`chat-msg ${message.type}`}
             >
-              <div className="txt">{message.text}</div>
+              <div className="txt">
+                {message.type === 'bot' ? (
+                  <FormattedMessage text={message.text} />
+                ) : (
+                  message.text
+                )}
+              </div>
               {message.sources && (
                 <div className="msg-sources">
                   <span>📂 Sources:</span> {message.sources.join(', ')}
