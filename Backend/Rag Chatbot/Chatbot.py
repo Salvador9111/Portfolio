@@ -34,13 +34,12 @@ GOOGLE_API_KEY = (
 
 # Preferred Gemini models in priority order with automated fallback
 MODEL_CANDIDATES = [
-    "gemini-3.6-flash",
-    "gemini-3.5-flash",
-    "gemini-3.7-flash",
-    "gemini-3.5-flash-lite",
-    "gemini-3.1-flash-lite",
     "gemini-flash-latest",
     "gemini-2.5-flash",
+    "gemini-flash-lite-latest",
+    "gemini-2.5-flash-lite",
+    "gemini-3-flash-preview",
+    "gemini-pro-latest",
 ]
 
 # -----------------------------
@@ -230,57 +229,72 @@ def call_gemini_api(prompt: str, system_instruction: str) -> Dict[str, Any]:
             detail="Google Gemini API key is not configured. Please set GOOGLE_API_KEY in .env or environment variables."
         )
 
-    payload = {
-        "system_instruction": {
-            "parts": [{"text": system_instruction}]
-        },
-        "contents": [
-            {
-                "parts": [{"text": prompt}]
-            }
-        ],
-        "generationConfig": {
-            "temperature": 0.3,
-            "maxOutputTokens": 800,
-        }
-    }
-    data_bytes = json.dumps(payload).encode("utf-8")
     last_error = None
 
     for model_name in MODEL_CANDIDATES:
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={api_key}"
-        req = urllib.request.Request(
-            url,
-            data=data_bytes,
-            headers={"Content-Type": "application/json"}
-        )
-        try:
-            with urllib.request.urlopen(req, timeout=15) as response:
-                if response.status == 200:
-                    res_json = json.loads(response.read().decode("utf-8"))
-                    candidates = res_json.get("candidates", [])
-                    if candidates:
-                        candidate = candidates[0]
-                        parts = candidate.get("content", {}).get("parts", [])
-                        text = "".join(p.get("text", "") for p in parts).strip()
-                        if text:
-                            return {
-                                "answer": text,
-                                "model": model_name,
-                                "status": "success"
-                            }
-        except urllib.error.HTTPError as e:
-            err_body = e.read().decode("utf-8", errors="ignore")
-            print(f"[Gemini API] Model {model_name} HTTP {e.code}: {err_body}")
-            if e.code == 429:
-                last_error = "API Quota reached (HTTP 429). Please try again shortly."
-            elif e.code == 404:
-                last_error = f"Model {model_name} not found, trying next available model."
-            else:
-                last_error = f"HTTP {e.code} on {model_name}: {err_body}"
-        except Exception as e:
-            print(f"[Gemini API] Model {model_name} error: {e}")
-            last_error = str(e)
+        # Try first with thinkingBudget=0 so thinking tokens do not consume the generation token limit.
+        # Fall back to standard config if model does not support thinkingConfig (returns HTTP 400).
+        configs_to_try = [
+            {"maxOutputTokens": 3000, "temperature": 0.3, "thinkingConfig": {"thinkingBudget": 0}},
+            {"maxOutputTokens": 3000, "temperature": 0.3}
+        ]
+
+        for gen_config in configs_to_try:
+            payload = {
+                "system_instruction": {
+                    "parts": [{"text": system_instruction}]
+                },
+                "contents": [
+                    {
+                        "parts": [{"text": prompt}]
+                    }
+                ],
+                "generationConfig": gen_config
+            }
+            data_bytes = json.dumps(payload).encode("utf-8")
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={api_key}"
+            req = urllib.request.Request(
+                url,
+                data=data_bytes,
+                headers={"Content-Type": "application/json"}
+            )
+            try:
+                with urllib.request.urlopen(req, timeout=20) as response:
+                    if response.status == 200:
+                        res_json = json.loads(response.read().decode("utf-8"))
+                        candidates = res_json.get("candidates", [])
+                        if candidates:
+                            candidate = candidates[0]
+                            parts = candidate.get("content", {}).get("parts", [])
+                            text = "".join(p.get("text", "") for p in parts).strip()
+                            finish_reason = candidate.get("finishReason", "UNKNOWN")
+                            if finish_reason == "MAX_TOKENS":
+                                print(f"[Gemini API Warning] Model {model_name} hit MAX_TOKENS limit.")
+                            if text:
+                                return {
+                                    "answer": text,
+                                    "model": model_name,
+                                    "status": "success"
+                                }
+            except urllib.error.HTTPError as e:
+                err_body = e.read().decode("utf-8", errors="ignore")
+                print(f"[Gemini API] Model {model_name} HTTP {e.code}: {err_body}")
+                if e.code == 400 and "thinkingConfig" in gen_config:
+                    # Model might not accept thinkingConfig; retry without it
+                    continue
+                if e.code == 429:
+                    last_error = "API Quota reached (HTTP 429). Please try again shortly."
+                    break
+                elif e.code == 404:
+                    last_error = f"Model {model_name} not found, trying next available model."
+                    break
+                else:
+                    last_error = f"HTTP {e.code} on {model_name}: {err_body}"
+                    break
+            except Exception as e:
+                print(f"[Gemini API] Model {model_name} error: {e}")
+                last_error = str(e)
+                break
 
     raise HTTPException(
         status_code=503,
@@ -304,6 +318,7 @@ Key Guidelines:
 - Structure responses clearly with distinct paragraphs, clear section headings, and bullet points. NEVER output a single continuous wall of text or one big paragraph.
 - Always use organized bullet points (- or *) whenever listing skills, technologies, projects, achievements, or contact details.
 - Provide a brief 1-2 sentence introductory sentence, followed by bulleted details or structured sub-points, and a brief concluding note when helpful.
+- Ensure every answer is complete, fully articulated, and concludes cleanly without cutting off mid-sentence.
 
 Portfolio Context:
 {context_text}

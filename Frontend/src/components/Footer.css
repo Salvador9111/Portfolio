@@ -241,6 +241,23 @@
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
+.magnets-footer .mg.white-text {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.magnets-footer .mg.white-text svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+/* Ensure 'make' magnet maintains its light purple background and visible white text in all themes */
+.magnets-footer .mg.w.white-text {
+  background: #cbb4fc !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
+}
+
 /* Font Sizes */
 .magnets-footer .big {
   --fs: clamp(1.4rem, 5.4vw, 4.2rem);

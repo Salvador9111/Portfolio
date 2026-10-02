@@ -8,7 +8,6 @@ import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ScrollReveal from './components/ScrollReveal';
-import MarqueeTicker from './components/MarqueeTicker';
 import ChatWidget from './components/ChatWidget';
 
 export default function App() {
@@ -78,9 +77,6 @@ export default function App() {
         <Header />
         <main>
           <Hero />
-
-          {/* Neoconda Infinite Tech Stack Marquee */}
-          <MarqueeTicker />
 
           <ScrollReveal>
             <About />

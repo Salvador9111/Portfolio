@@ -41,11 +41,13 @@ export default function Footer() {
       words: true,
       size: 'big',
       id: `word-${i}`,
+      whiteText: w.toLowerCase() === 'make',
     })),
     ...CFG.small.map((o, i) => ({
       ...o,
       size: 'sm',
       id: `sm-${i}`,
+      whiteText: o.t.toLowerCase() === 'github' || o.t.toLowerCase() === 'skills',
     })),
   ]).current;
 
@@ -387,7 +389,7 @@ export default function Footer() {
               <Tag
                 key={m.id}
                 ref={(el) => (magRefs.current[i] = el)}
-                className={`mg ${m.size} ${m.c}`}
+                className={`mg ${m.size} ${m.c} ${m.whiteText ? 'white-text' : ''}`}
                 onPointerDown={(e) => handlePointerDown(e, i)}
                 onPointerMove={(e) => handlePointerMove(e, i)}
                 onPointerUp={(e) => handlePointerUp(e, i)}

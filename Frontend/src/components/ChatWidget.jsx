@@ -316,16 +316,16 @@ export default function ChatWidget() {
         }
         ctx.lineTo(W, H);
         ctx.closePath();
-        ctx.fillStyle = '#0a0714';
+        ctx.fillStyle = '#08080a';
         ctx.fill();
 
         if (i === N - 1) {
           const g = ctx.createLinearGradient(0, 0, W, 0);
-          g.addColorStop(0, 'rgba(108, 49, 227, 0.2)');
-          g.addColorStop(0.6, '#8a55f5');
-          g.addColorStop(1, '#c2a4ff');
+          g.addColorStop(0, 'rgba(255, 255, 255, 0.1)');
+          g.addColorStop(0.5, '#9a6bff');
+          g.addColorStop(1, '#ffffff');
           ctx.shadowColor = '#6C31E3';
-          ctx.shadowBlur = 12;
+          ctx.shadowBlur = 8;
           ctx.strokeStyle = g;
         } else {
           ctx.shadowBlur = 0;
@@ -363,6 +363,100 @@ export default function ChatWidget() {
       observer.disconnect();
     };
   }, [isOpen]);
+
+  const logoBtnRef = useRef(null);
+
+  // Eye & Face tracking micro-animation for character logo
+  useEffect(() => {
+    const P = { x: window.innerWidth / 2, y: window.innerHeight / 2, t: -1e9 };
+    const handlePointerMove = (e) => {
+      P.x = e.clientX;
+      P.y = e.clientY;
+      P.t = performance.now();
+    };
+    window.addEventListener('pointermove', handlePointerMove);
+
+    let wd = { x: 0, y: 0, next: 0 };
+    let animId = 0;
+
+    const loop = (now) => {
+      const eyeEls = document.querySelectorAll('.chatbot-toggle .eye');
+      const faceEls = document.querySelectorAll('.chatbot-toggle .face');
+
+      if (now > wd.next) {
+        wd = {
+          x: Math.random() * 2 - 1,
+          y: Math.random() * 1.2 - 0.6,
+          next: now + 1500 + Math.random() * 2000,
+        };
+      }
+      const idle = now - P.t > 3000;
+
+      eyeEls.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.width === 0) return;
+        const k = r.width * 0.19;
+        const dx = P.x - (r.left + r.width / 2);
+        const dy = P.y - (r.top + r.height / 2);
+        const d = Math.hypot(dx, dy) || 1;
+        let tx, ty, ts;
+        if (idle) {
+          tx = wd.x * k;
+          ty = wd.y * k;
+          ts = 1;
+        } else {
+          const m = Math.min(1, d / (r.width * 3));
+          tx = (dx / d) * k * m;
+          ty = (dy / d) * k * m;
+          ts = 1 + 0.28 * (1 - Math.min(1, d / (r.width * 9)));
+        }
+
+        const prevX = parseFloat(el.dataset.x || '0');
+        const prevY = parseFloat(el.dataset.y || '0');
+        const prevS = parseFloat(el.dataset.s || '1');
+
+        const newX = prevX + (tx - prevX) * 0.13;
+        const newY = prevY + (ty - prevY) * 0.13;
+        const newS = prevS + (ts - prevS) * 0.1;
+
+        el.dataset.x = newX;
+        el.dataset.y = newY;
+        el.dataset.s = newS;
+
+        el.style.setProperty('--px', `${newX}px`);
+        el.style.setProperty('--py', `${newY}px`);
+        el.style.setProperty('--ps', newS);
+      });
+
+      faceEls.forEach((o) => {
+        const r = o.getBoundingClientRect();
+        if (r.width === 0) return;
+        const w = r.width;
+        const prevX = parseFloat(o.dataset.x || '0');
+        const prevY = parseFloat(o.dataset.y || '0');
+        const cx = r.left + w / 2 - prevX;
+        const cy = r.top + w / 2 - prevY;
+        const dx = idle ? 0 : P.x - cx;
+        const dy = idle ? 0 : P.y - cy;
+        const d = Math.hypot(dx, dy) || 1;
+        const m = Math.min(d, 220) / 220;
+        const newX = prevX + ((dx / d) * m * w * 0.05 - prevX) * 0.09;
+        const newY = prevY + ((dy / d) * m * w * 0.05 - prevY) * 0.09;
+        o.dataset.x = newX;
+        o.dataset.y = newY;
+        o.style.transform = `translate(${newX}px, ${newY}px)`;
+      });
+
+      animId = requestAnimationFrame(loop);
+    };
+
+    animId = requestAnimationFrame(loop);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('pointermove', handlePointerMove);
+    };
+  }, []);
 
   // Adjust wave energy on typing state
   useEffect(() => {
@@ -490,19 +584,40 @@ export default function ChatWidget() {
 
   return (
     <div ref={chatbotRef} className="chatbot-container">
-      {/* Floating Violet Neon Toggle Launcher */}
-      {!isOpen && (
-        <button
-          className="chatbot-toggle"
-          onClick={toggleChat}
-          aria-label="Open chat with Hammad's assistant"
-          type="button"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+      {/* Floating Interactive Character Logo Launcher */}
+      <button
+        ref={logoBtnRef}
+        className={`chatbot-toggle lg ${isOpen ? 'active-open' : ''}`}
+        onClick={toggleChat}
+        aria-label={isOpen ? "Close chat with Hammad's assistant" : "Chat with me"}
+        type="button"
+      >
+        <span className="disc">
+          <svg className="ring" viewBox="0 0 64 64" aria-hidden="true">
+            <defs>
+              <path
+                id="chat-logo-ring-path"
+                d="M32 32m-24.5 0a24.5 24.5 0 1 1 49 0a24.5 24.5 0 1 1-49 0"
+              />
+            </defs>
+            <circle className="core" cx="32" cy="32" r="16.5" />
+            <text>
+              <textPath href="#chat-logo-ring-path" textLength="152" lengthAdjust="spacing">
+                psst · ask me anything · I don't bite ·{' '}
+              </textPath>
+            </text>
           </svg>
-        </button>
-      )}
+          <span className="face">
+            <i className="eye e1">
+              <i className="pupil" />
+            </i>
+            <i className="eye e2">
+              <i className="pupil" />
+            </i>
+            <i className="smirk" />
+          </span>
+        </span>
+      </button>
 
       {/* Compact Chat Panel Window */}
       <section
