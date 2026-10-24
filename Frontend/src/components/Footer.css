@@ -3,63 +3,22 @@
    ========================================================================== */
 
 :root {
-  --surf: #e3e8e1;
-  --panel: #edf1ea;
-  --ink: #111413;
-  --mute: #586059;
-  --line: #c3cbc2;
-  --dot: #b9c2b8;
+  /* Dark-only palette (permanent dark theme) */
+  --surf: #0a0a0c;
+  --panel: #20232a;
+  --ink: #ffffff;
+  --mute: #9ea5b4;
+  --line: #353a45;
+  --dot: #444b58;
   --d: 'Unbounded', 'Arial Black', Arial, sans-serif;
   --b: 'Figtree', 'Helvetica Neue', Arial, sans-serif;
   --y: #ffd400;
   --r: #e5243b;
   --g: #2fd08a;
   --p: #ff8fb1;
-  --w: #fbfbf8;
-  --w-ink: #111413;
-  --k: #111413;
-}
-
-/* Dark Theme Overrides: Font color white, white backgrounds become light purple,
-   box little gray, whole footer slightly black */
-:root.dark,
-:root[data-theme="dark"] {
-  --surf: #0a0a0c; /* Little slightly black for the whole footer boundary */
-  --panel: #20232a; /* A little gray for the big box with magnets */
-  --ink: #ffffff;
-  --mute: #9ea5b4;
-  --line: #353a45;
-  --dot: #444b58;
-  --w: #cbb4fc; /* Light purple for elements that had white background */
+  --w: #cbb4fc;
   --w-ink: #15092e;
   --k: #121418;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not(.light) {
-    --surf: #0a0a0c;
-    --panel: #20232a;
-    --ink: #ffffff;
-    --mute: #9ea5b4;
-    --line: #353a45;
-    --dot: #444b58;
-    --w: #cbb4fc;
-    --w-ink: #15092e;
-    --k: #121418;
-  }
-}
-
-:root[data-theme="light"],
-:root.light {
-  --surf: #e3e8e1;
-  --panel: #edf1ea;
-  --ink: #111413;
-  --mute: #586059;
-  --line: #c3cbc2;
-  --dot: #b9c2b8;
-  --w: #fbfbf8;
-  --w-ink: #111413;
-  --k: #111413;
 }
 
 .magnets-footer {
@@ -251,7 +210,7 @@
   stroke: #ffffff !important;
 }
 
-/* Ensure 'make' magnet maintains its light purple background and visible white text in all themes */
+/* Ensure 'make' magnet maintains its light purple background and visible white text */
 .magnets-footer .mg.w.white-text {
   background: #cbb4fc !important;
   color: #ffffff !important;
@@ -315,8 +274,13 @@
   color: var(--mute);
 }
 
-.magnets-footer .bar .bar-spacer {
-  /* Empty spacer to balance column 1 */
+.magnets-footer .bar .l {
+  grid-column: 1;
+  display: flex;
+  gap: 0.6rem;
+  justify-content: flex-start;
+  align-items: center;
+  justify-self: start;
 }
 
 .magnets-footer .bar .mid {

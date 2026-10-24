@@ -321,17 +321,7 @@ export default function Footer() {
     }
   };
 
-  const toggleTheme = () => {
-    const r = document.documentElement;
-    const isDark = r.classList.contains('dark') || r.dataset.theme === 'dark';
-    if (isDark) {
-      r.classList.remove('dark');
-      r.dataset.theme = 'light';
-    } else {
-      r.classList.add('dark');
-      r.dataset.theme = 'dark';
-    }
-  };
+
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -432,15 +422,14 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="bar">
-          <div className="bar-spacer" aria-hidden="true" />
-          <span className="mid">HAMMAD</span>
-          <div className="r">
-            <button className="btn" type="button" onClick={toggleTheme}>
-              Theme
-            </button>
+          <div className="l">
             <button className="btn" type="button" onClick={scrollToTop}>
               Top
             </button>
+          </div>
+          <span className="mid">HAMMAD</span>
+          <div className="r">
+            <div className="bar-spacer" aria-hidden="true" />
           </div>
         </div>
       </div>

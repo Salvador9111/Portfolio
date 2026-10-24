@@ -5,31 +5,35 @@ import TiltCard from './TiltCard';
 
 export default function ProjectCard({ project }) {
   return (
-    <TiltCard
+    <div
       className="liquid-glass-card"
       style={{
-        padding: '18px 16px',
+        padding: '20px 18px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         height: '100%',
-        minHeight: '410px',
-        maxHeight: '430px',
-        borderRadius: '16px',
-        background: 'linear-gradient(145deg, rgba(18, 18, 26, 0.88) 0%, rgba(10, 10, 15, 0.94) 100%)',
-        border: '1px solid rgba(255, 255, 255, 0.15)',
-        boxShadow: '0 16px 36px rgba(0, 0, 0, 0.7), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2)'
+        minHeight: '420px',
+        maxHeight: '440px',
+        borderRadius: '20px',
+        background: 'linear-gradient(145deg, rgba(38, 43, 56, 0.94) 0%, rgba(26, 30, 40, 0.98) 100%)',
+        border: '1px solid rgba(255, 255, 255, 0.28)',
+        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.55), inset 0 1px 1px 0 rgba(255, 255, 255, 0.35)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        position: 'relative'
       }}
     >
       <div>
-        {/* Balanced Vertical Image Frame (140px) */}
+        {/* Balanced Vertical Image Frame */}
         <div
           style={{
-            backgroundColor: 'var(--color-surface-muted)',
-            border: '1px solid rgba(255, 255, 255, 0.12)',
-            borderRadius: '10px',
+            backgroundColor: '#1e222d',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            borderRadius: '12px',
             overflow: 'hidden',
-            marginBottom: '12px'
+            marginBottom: '14px',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.25)'
           }}
         >
           <picture>
@@ -41,7 +45,7 @@ export default function ProjectCard({ project }) {
               decoding="async"
               style={{
                 width: '100%',
-                height: '140px',
+                height: '145px',
                 objectFit: 'cover',
                 display: 'block'
               }}
@@ -53,17 +57,18 @@ export default function ProjectCard({ project }) {
         <h3
           style={{
             fontFamily: 'var(--font-serif)',
-            fontSize: '1.38rem',
-            fontWeight: 400,
-            marginBottom: '6px',
+            fontSize: '1.42rem',
+            fontWeight: 600,
+            marginBottom: '8px',
             color: '#FFFFFF',
+            letterSpacing: '-0.01em',
             lineHeight: 1.25
           }}
         >
           {project.name}
         </h3>
 
-        <p style={{ color: 'rgba(255, 255, 255, 0.80)', fontSize: '0.835rem', marginBottom: '12px', lineHeight: 1.4, fontWeight: 400 }}>
+        <p style={{ color: '#E2E8F0', fontSize: '0.875rem', marginBottom: '14px', lineHeight: 1.45, fontWeight: 400 }}>
           {project.tagline}
         </p>
 
@@ -73,15 +78,16 @@ export default function ProjectCard({ project }) {
             <span
               key={tech}
               style={{
-                fontSize: '0.7rem',
+                fontSize: '0.72rem',
                 fontFamily: 'var(--font-mono)',
-                padding: '3px 9px',
-                background: 'rgba(255, 255, 255, 0.08)',
+                fontWeight: 500,
+                padding: '4px 10px',
+                background: 'rgba(255, 255, 255, 0.14)',
                 backdropFilter: 'blur(8px)',
                 WebkitBackdropFilter: 'blur(8px)',
-                border: '1px solid rgba(255, 255, 255, 0.18)',
-                borderRadius: '6px',
-                color: '#FFFFFF'
+                border: '1px solid rgba(255, 255, 255, 0.25)',
+                borderRadius: '8px',
+                color: '#F8FAFC'
               }}
             >
               {tech}
@@ -91,7 +97,7 @@ export default function ProjectCard({ project }) {
       </div>
 
       {/* Action Buttons */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingTop: '8px', borderTop: '1px solid var(--color-border)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingTop: '10px', borderTop: '1px solid rgba(255, 255, 255, 0.15)' }}>
         {project.github && (
           <a
             href={project.github}
@@ -117,6 +123,6 @@ export default function ProjectCard({ project }) {
           </a>
         )}
       </div>
-    </TiltCard>
+    </div>
   );
 }

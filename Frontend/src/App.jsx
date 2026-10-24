@@ -9,10 +9,13 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ScrollReveal from './components/ScrollReveal';
 import ChatWidget from './components/ChatWidget';
+import CursorGlow from './components/CursorGlow';
 
 export default function App() {
   return (
     <div className="portfolio-app" style={{ position: 'relative', minHeight: '100vh' }}>
+      {/* WebGL Fluid Cursor Glow */}
+      <CursorGlow />
       {/* Global Ambient Glass Lights & Optical Background Nodes */}
       <div
         className="ambient-glass-canvas"

@@ -2,240 +2,221 @@ import React, { useEffect, useRef, useState } from 'react';
 import { portfolioData } from '../data/portfolioData';
 import ProjectCard from './ProjectCard';
 
-// ─── Parametric Lemniscate (Infinity) Equations ─────────────────────────────
-// Bernard Bernoulli's lemniscate:
-//   x(t) = A · cos(t) / (1 + sin²(t))
-//   y(t) = B · sin(t)·cos(t) / (1 + sin²(t))
-// We use a Lissajous variant with Z depth for a 3D "∞" in space.
-const lemniscate = (t, A, B, C) => {
-  const denom = 1 + Math.sin(t) * Math.sin(t);
-  const x = A * Math.cos(t) / denom;
-  const y = B * Math.sin(t) * Math.cos(t) / denom;
-  const z = C * Math.sin(t);         // Z depth — forward at top lobe, back at bottom
-  return { x, y, z };
-};
-
-const NUM_CARDS = 5;
-const TWO_PI = Math.PI * 2;
-
+/**
+ * 3D Round Carousel for Portfolio Projects
+ * - Auto-rotates constantly on its own (never stops)
+ * - Draggable horizontally with mouse/touch to spin faster or reverse
+ * - Independent of vertical page scroll (scrolling down page does not hijack rotation)
+ * - Premium 3D cylinder depth with customizable tilt and lighting
+ */
 export default function HorizontalProjects() {
   const { projects } = portfolioData;
-  const sectionRef = useRef(null);
-  const containerRef = useRef(null);
-  const cardRefs = useRef([]);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [uiProgress, setUiProgress] = useState(0);
+  const count = projects.length;
 
-  const targetProgress = useRef(0);
-  const currentProgress = useRef(0);
+  const ringRef = useRef(null);
+  const rafRef = useRef(0);
+  const rotYRef = useRef(0);
+  const velRef = useRef(0);
+  const lastTimeRef = useRef(0);
+  const dragRef = useRef({ active: false, startX: 0, lastX: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Configuration tuned for 320px wide project cards
+  const cardWidth = 320;
+  const spacing = 1.75; // increased space between project boxes
+  const countSafe = Math.max(count, 3);
+  const angle = 360 / countSafe;
+  const radius = Math.round((cardWidth * spacing) / (2 * Math.tan(Math.PI / countSafe)));
+  
+  // Continuous base speed: slightly faster smooth rotation (~19 deg/sec)
+  const baseSpeed = 19; // deg/sec
+  const tilt = -4; // degrees forward tilt for 3D perspective
+  const perspective = 2400;
 
   useEffect(() => {
-    let animationFrameId;
+    const ring = ringRef.current;
+    if (!ring) return;
 
-    const renderLoop = () => {
-      if (!sectionRef.current) {
-        animationFrameId = requestAnimationFrame(renderLoop);
-        return;
+    const render = (now) => {
+      if (!lastTimeRef.current) lastTimeRef.current = now;
+      const dt = Math.min((now - lastTimeRef.current) / 1000, 0.1);
+      lastTimeRef.current = now;
+
+      const drag = dragRef.current;
+
+      if (!drag.active) {
+        // Continuous auto-rotation that never stops
+        // If user imparted a drag flick velocity, smoothly decay it towards baseSpeed
+        if (Math.abs(velRef.current) > 0.5) {
+          rotYRef.current += velRef.current * dt;
+          velRef.current *= 0.95; // momentum decay
+        } else {
+          // Always maintain constant smooth auto-rotation
+          rotYRef.current += baseSpeed * dt;
+        }
       }
 
-      const section = sectionRef.current;
-      const rect = section.getBoundingClientRect();
-      const sectionHeight = section.offsetHeight;
-      const windowHeight = window.innerHeight;
+      // Keep angle normalized between 0-360
+      if (rotYRef.current >= 360000 || rotYRef.current <= -360000) {
+        rotYRef.current %= 360;
+      }
 
-      const totalScrollable = sectionHeight - windowHeight;
-      const currentScroll = -rect.top;
-
-      let raw = currentScroll / totalScrollable;
-      targetProgress.current = Math.max(0, Math.min(1, raw));
-
-      // Butter LERP — factor 0.07 = silky momentum
-      currentProgress.current += (targetProgress.current - currentProgress.current) * 0.07;
-
-      const p = currentProgress.current;
-
-      // ── Infinity Path: drive all cards through 1.5 loops (3π radians total) ──
-      // As p goes 0→1, the "anchor angle" sweeps 0 → 3π
-      const anchorAngle = p * Math.PI * 2;
-
-      // Amplitude tuning — these feel best at 1080p+ viewports
-      const AX = window.innerWidth * 0.30;  // horizontal spread
-      const AY = window.innerHeight * 0.08;  // vertical height of the lobe (tuned so cards stay lower)
-      const AZ = 320;                         // depth pop (pixels of perspective)
-
-      const _cardW = 305;
-      const _cardH = 430;
-
-      let closestZ = -Infinity;
-      let closestIdx = 0;
-
-      cardRefs.current.forEach((el, i) => {
-        if (!el) return;
-
-        // Each card is equally spaced around the loop
-        const phase = anchorAngle + (i / NUM_CARDS) * TWO_PI;
-        const { x, y, z } = lemniscate(phase, AX, AY, AZ);
-
-        // Map Z (-AZ..+AZ) → scale (0.50..0.94) and opacity (0.25..1.0)
-        const zNorm = (z + AZ) / (2 * AZ);          // 0 (back) … 1 (front)
-        const scale = 0.50 + zNorm * 0.44;
-        const opacity = 0.25 + zNorm * 0.75;
-
-        // zIndex so front-cards visually overlap back-cards
-        const zIndex = Math.round(zNorm * 100);
-
-        el.style.transform =
-          `translate(-50%, -50%) translate3d(${x}px, ${y}px, 0px) scale(${scale})`;
-        el.style.opacity = opacity;
-        el.style.zIndex = zIndex;
-
-        if (z > closestZ) { closestZ = z; closestIdx = i; }
-      });
-
-      // Update UI occasionally (not every frame)
-      const roundedP = Math.round(p * 100) / 100;
-      setUiProgress(roundedP);
-      setActiveIndex(closestIdx);
-
-      animationFrameId = requestAnimationFrame(renderLoop);
+      ring.style.transform = `translateZ(-${radius}px) rotateY(${rotYRef.current}deg)`;
+      rafRef.current = requestAnimationFrame(render);
     };
 
-    animationFrameId = requestAnimationFrame(renderLoop);
-    return () => { if (animationFrameId) cancelAnimationFrame(animationFrameId); };
-  }, []);
+    rafRef.current = requestAnimationFrame(render);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [radius, baseSpeed]);
+
+  const onPointerDown = (e) => {
+    // Only engage drag if clicking the carousel stage (not when clicking links/buttons directly)
+    if (e.target.closest('a') || e.target.closest('button')) {
+      return;
+    }
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch (_) {}
+    dragRef.current = { active: true, startX: e.clientX, lastX: e.clientX };
+    velRef.current = 0;
+  };
+
+  const onPointerMove = (e) => {
+    const drag = dragRef.current;
+    if (!drag.active) return;
+    const dx = e.clientX - drag.lastX;
+    drag.lastX = e.clientX;
+
+    const sensitivity = 0.32;
+    rotYRef.current += dx * sensitivity;
+    // Store flick momentum so carousel spins fluidly and keeps moving
+    velRef.current = dx * sensitivity * 45;
+  };
+
+  const onPointerUp = (e) => {
+    if (!dragRef.current.active) return;
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch (_) {}
+    dragRef.current.active = false;
+  };
 
   return (
     <section
       id="work"
-      ref={sectionRef}
       style={{
         position: 'relative',
-        height: '350vh',
-        backgroundColor: 'transparent'
+        padding: '120px 0 140px',
+        backgroundColor: 'transparent',
+        overflow: 'hidden'
       }}
     >
       <span id="projects" style={{ position: 'absolute', top: 0 }} />
-      {/* ── Sticky viewport ── */}
-      <div
-        style={{
-          position: 'sticky',
-          top: 0,
-          height: '100vh',
-          overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          perspective: '1200px'
-        }}
-      >
-        {/* Header row */}
-        <div
-          className="container"
-          style={{
-            position: 'absolute',
-            top: 'clamp(106px, 13.5vh, 126px)',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '100%',
-            zIndex: 200
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '20px' }}>
-            <div>
-              <div className="editorial-badge" style={{ marginBottom: '8px' }}>
-                <span className="editorial-line"></span>
-                <span className="label-caps">02 / FEATURED WORKS ({projects.length})</span>
-              </div>
-              <h2
-                className="section-editorial-title"
-                style={{
-                  fontFamily: "'Big Shoulders Display', 'Montserrat', Impact, sans-serif",
-                  fontSize: 'clamp(36px, 5.1vw, 59px)',
-                  lineHeight: 0.98,
-                  fontWeight: 900,
-                  letterSpacing: '0.02em',
-                  color: '#FFFFFF',
-                  margin: 0
-                }}
-              >
-                <strong style={{ fontWeight: 900, color: '#FFFFFF', letterSpacing: '0.02em' }}>
-                  CASE STUDIES &amp; WORKING SYSTEMS.
-                </strong>
-              </h2>
-            </div>
 
-            {/* Progress indicator */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0, marginTop: '8px' }}>
-              <span style={{ fontSize: '0.8rem', fontFamily: 'var(--font-mono)', color: '#FFFFFF', fontWeight: 700 }}>
-                0{activeIndex + 1} / 0{projects.length}
-              </span>
-              <div style={{ width: '100px', height: '4px', backgroundColor: 'var(--color-border)', borderRadius: '2px', overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${uiProgress * 100}%`, backgroundColor: '#FFFFFF', transition: 'width 0.12s linear' }} />
-              </div>
+      {/* Header */}
+      <div className="container" style={{ marginBottom: '40px', position: 'relative', zIndex: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px' }}>
+          <div>
+            <div className="editorial-badge" style={{ marginBottom: '10px' }}>
+              <span className="editorial-line"></span>
+              <span className="label-caps">02 / FEATURED WORKS ({projects.length})</span>
             </div>
-          </div>
-        </div>
-
-        {/* ── Infinity Track ── */}
-        {/* Cards are absolutely positioned at center, then moved by the lemniscate math */}
-        <div
-          ref={containerRef}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          {projects.map((project, i) => (
-            <div
-              key={project.id}
-              ref={el => cardRefs.current[i] = el}
+            <h2
+              className="section-editorial-title"
               style={{
-                position: 'absolute',
-                top: '73%',
-                left: '50%',
-                width: '305px',
-                willChange: 'transform, opacity',
-                transformOrigin: 'center center'
+                fontFamily: "'Big Shoulders Display', 'Montserrat', Impact, sans-serif",
+                fontSize: 'clamp(38px, 5.5vw, 64px)',
+                lineHeight: 0.98,
+                fontWeight: 900,
+                letterSpacing: '0.02em',
+                color: '#FFFFFF',
+                margin: 0
               }}
             >
-              <ProjectCard project={project} />
-            </div>
-          ))}
+              <strong style={{ fontWeight: 900, color: '#FFFFFF', letterSpacing: '0.02em' }}>
+                CASE STUDIES &amp; WORKING SYSTEMS.
+              </strong>
+            </h2>
+          </div>
         </div>
-
-        {/* Subtle ∞ guide trace — decorative only */}
-        <svg
-          style={{
-            position: 'absolute',
-            inset: 0,
-            width: '100%',
-            height: '100%',
-            transform: 'translateY(18%)',
-            opacity: 0.06,
-            pointerEvents: 'none',
-            zIndex: 1
-          }}
-          viewBox="0 0 1000 600"
-          preserveAspectRatio="xMidYMid meet"
-        >
-          <path
-            d="M 500 300 C 550 150, 800 150, 800 300 C 800 450, 550 450, 500 300 C 450 150, 200 150, 200 300 C 200 450, 450 450, 500 300 Z"
-            fill="none"
-            stroke="#FFFFFF"
-            strokeWidth="1.5"
-            strokeDasharray="6 6"
-          />
-        </svg>
       </div>
 
-      <style>{`
-        #projects .project-card-inner {
-          transition: opacity 0.08s linear;
-        }
-      `}</style>
+      {/* 3D Round Carousel Viewport */}
+      <div
+        style={{
+          width: '100%',
+          height: '560px',
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          perspective: `${perspective}px`,
+          perspectiveOrigin: '50% 50%',
+          cursor: 'grab',
+          userSelect: 'none',
+          touchAction: 'pan-y' // Allow vertical page scroll without locking, while horizontal drag rotates carousel
+        }}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+      >
+        {/* Subtle Ambient Depth Lighting behind the ring */}
+        <div
+          style={{
+            position: 'absolute',
+            width: '600px',
+            height: '350px',
+            background: 'radial-gradient(ellipse at center, rgba(168, 85, 247, 0.16) 0%, rgba(59, 130, 246, 0.08) 50%, transparent 75%)',
+            filter: 'blur(60px)',
+            pointerEvents: 'none',
+            zIndex: 0
+          }}
+        />
+
+        {/* 3D Rotating Cylinder Stage */}
+        <div
+          style={{
+            transformStyle: 'preserve-3d',
+            transform: `rotateX(${tilt}deg)`,
+            position: 'relative',
+            width: `${cardWidth}px`,
+            height: '440px'
+          }}
+        >
+          <div
+            ref={ringRef}
+            style={{
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+              transformStyle: 'preserve-3d',
+              willChange: 'transform'
+            }}
+          >
+            {projects.map((project, i) => {
+              const cardAngle = i * angle;
+              return (
+                <div
+                  key={project.id}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: `${cardWidth}px`,
+                    transform: `rotateY(${cardAngle}deg) translateZ(${radius}px)`,
+                    transformStyle: 'preserve-3d',
+                    backfaceVisibility: 'visible'
+                  }}
+                >
+                  <ProjectCard project={project} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
