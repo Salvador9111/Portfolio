@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { portfolioData } from '../data/portfolioData';
+import VenomButton from './VenomButton';
 import './ContactBook.css';
 
 export default function Contact() {
@@ -272,16 +273,24 @@ export default function Contact() {
                 {errors.notes && <span className="book-form-error">{errors.notes}</span>}
               </div>
 
-              {/* Submit Button */}
+              {/* Submit Button with Venom WebGL interaction */}
               <div className="book-btn-wrap">
-                <button
-                  id="go"
+                <VenomButton
                   type="submit"
-                  className="book-btn"
                   disabled={isSubmitting}
-                >
-                  {isSubmitting ? 'Adding to the book...' : 'Add me to the book'}
-                </button>
+                  label={isSubmitting ? 'Adding to the book...' : 'Add me to the book'}
+                  cursor="native"
+                  autoplay={false}
+                  background="transparent"
+                  gooColor="#070709"
+                  textColor="#FFFFFF"
+                  size={58}
+                  style={{
+                    width: '100%',
+                    height: '180px',
+                    borderRadius: '8px',
+                  }}
+                />
               </div>
 
               {/* Rubber Stamp & Confirmation Status */}
