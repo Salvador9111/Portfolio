@@ -159,7 +159,7 @@ export default function Projects() {
             modules={[EffectCoverflow, Pagination, Mousewheel, Keyboard]}
             className="projects-swiper"
           >
-            {projects.map((project) => (
+            {projects.map((project, i) => (
               <SwiperSlide
                 key={project.id}
                 style={{
@@ -168,7 +168,7 @@ export default function Projects() {
                   filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.5))'
                 }}
               >
-                <ProjectCard project={project} />
+                <ProjectCard project={project} index={i} />
               </SwiperSlide>
             ))}
           </Swiper>

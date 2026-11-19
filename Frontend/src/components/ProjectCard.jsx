@@ -1,12 +1,87 @@
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
 import { Github } from './Icons';
-import TiltCard from './TiltCard';
 
-export default function ProjectCard({ project }) {
+// Distinct light color palettes for each project card with high-contrast darkened text
+const THEMES = {
+  'uclothes': {
+    name: 'light-blue',
+    className: 'theme-light-blue',
+    chipBg: 'rgba(255, 255, 255, 0.85)',
+    chipBorder: 'rgba(59, 130, 246, 0.35)',
+    chipText: '#1D4ED8',
+    divider: 'rgba(59, 130, 246, 0.25)'
+  },
+  'hospital-crm': {
+    name: 'light-green',
+    className: 'theme-light-green',
+    chipBg: 'rgba(255, 255, 255, 0.85)',
+    chipBorder: 'rgba(34, 197, 94, 0.35)',
+    chipText: '#15803D',
+    divider: 'rgba(34, 197, 94, 0.25)'
+  },
+  'jarvis': {
+    name: 'light-purple',
+    className: 'theme-light-purple',
+    chipBg: 'rgba(255, 255, 255, 0.85)',
+    chipBorder: 'rgba(168, 85, 247, 0.35)',
+    chipText: '#7E22CE',
+    divider: 'rgba(168, 85, 247, 0.25)'
+  },
+  'lumina': {
+    name: 'light-yellow',
+    className: 'theme-light-yellow',
+    chipBg: 'rgba(255, 255, 255, 0.90)',
+    chipBorder: 'rgba(234, 179, 8, 0.40)',
+    chipText: '#A16207',
+    divider: 'rgba(234, 179, 8, 0.25)'
+  },
+  'rag-chatbot': {
+    name: 'light-red',
+    className: 'theme-light-red',
+    chipBg: 'rgba(255, 255, 255, 0.85)',
+    chipBorder: 'rgba(244, 63, 94, 0.35)',
+    chipText: '#BE123C',
+    divider: 'rgba(244, 63, 94, 0.25)'
+  },
+  'lunar-lander': {
+    name: 'light-cyan',
+    className: 'theme-light-cyan',
+    chipBg: 'rgba(255, 255, 255, 0.85)',
+    chipBorder: 'rgba(20, 184, 166, 0.35)',
+    chipText: '#0F766E',
+    divider: 'rgba(20, 184, 166, 0.25)'
+  },
+  'autonomous-driving': {
+    name: 'light-peach',
+    className: 'theme-light-peach',
+    chipBg: 'rgba(255, 255, 255, 0.90)',
+    chipBorder: 'rgba(249, 115, 22, 0.40)',
+    chipText: '#C2410C',
+    divider: 'rgba(249, 115, 22, 0.25)'
+  }
+};
+
+const THEME_LIST = [
+  THEMES['uclothes'],
+  THEMES['hospital-crm'],
+  THEMES['jarvis'],
+  THEMES['lumina'],
+  THEMES['rag-chatbot'],
+  THEMES['lunar-lander'],
+  THEMES['autonomous-driving']
+];
+
+export default function ProjectCard({ project, index }) {
+  const theme =
+    THEMES[project.id] ||
+    (typeof index === 'number'
+      ? THEME_LIST[index % THEME_LIST.length]
+      : THEME_LIST[0]);
+
   return (
     <div
-      className="liquid-glass-card"
+      className={`liquid-glass-card ${theme.className}`}
       style={{
         padding: '20px 18px',
         display: 'flex',
@@ -16,11 +91,6 @@ export default function ProjectCard({ project }) {
         minHeight: '420px',
         maxHeight: '440px',
         borderRadius: '20px',
-        background: 'linear-gradient(145deg, rgba(38, 43, 56, 0.94) 0%, rgba(26, 30, 40, 0.98) 100%)',
-        border: '1px solid rgba(255, 255, 255, 0.28)',
-        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.55), inset 0 1px 1px 0 rgba(255, 255, 255, 0.35)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
         position: 'relative'
       }}
     >
@@ -28,12 +98,12 @@ export default function ProjectCard({ project }) {
         {/* Balanced Vertical Image Frame */}
         <div
           style={{
-            backgroundColor: '#1e222d',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
+            backgroundColor: '#FFFFFF',
+            border: '1px solid rgba(15, 23, 42, 0.08)',
             borderRadius: '12px',
             overflow: 'hidden',
             marginBottom: '14px',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.25)'
+            boxShadow: '0 4px 12px rgba(15, 23, 42, 0.08)'
           }}
         >
           <picture>
@@ -53,14 +123,14 @@ export default function ProjectCard({ project }) {
           </picture>
         </div>
 
-        {/* Project Title */}
+        {/* Project Title - Darkened for high readability on light card */}
         <h3
           style={{
             fontFamily: 'var(--font-serif)',
             fontSize: '1.42rem',
-            fontWeight: 600,
+            fontWeight: 700,
             marginBottom: '8px',
-            color: '#FFFFFF',
+            color: '#0F172A',
             letterSpacing: '-0.01em',
             lineHeight: 1.25
           }}
@@ -68,7 +138,16 @@ export default function ProjectCard({ project }) {
           {project.name}
         </h3>
 
-        <p style={{ color: '#E2E8F0', fontSize: '0.875rem', marginBottom: '14px', lineHeight: 1.45, fontWeight: 400 }}>
+        {/* Tagline - Darkened readable slate */}
+        <p
+          style={{
+            color: '#1E293B',
+            fontSize: '0.875rem',
+            marginBottom: '14px',
+            lineHeight: 1.45,
+            fontWeight: 500
+          }}
+        >
           {project.tagline}
         </p>
 
@@ -80,14 +159,14 @@ export default function ProjectCard({ project }) {
               style={{
                 fontSize: '0.72rem',
                 fontFamily: 'var(--font-mono)',
-                fontWeight: 500,
+                fontWeight: 600,
                 padding: '4px 10px',
-                background: 'rgba(255, 255, 255, 0.14)',
+                background: theme.chipBg,
                 backdropFilter: 'blur(8px)',
                 WebkitBackdropFilter: 'blur(8px)',
-                border: '1px solid rgba(255, 255, 255, 0.25)',
+                border: `1px solid ${theme.chipBorder}`,
                 borderRadius: '8px',
-                color: '#F8FAFC'
+                color: theme.chipText
               }}
             >
               {tech}
@@ -97,16 +176,23 @@ export default function ProjectCard({ project }) {
       </div>
 
       {/* Action Buttons */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingTop: '10px', borderTop: '1px solid rgba(255, 255, 255, 0.15)' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          paddingTop: '10px',
+          borderTop: `1px solid ${theme.divider}`
+        }}
+      >
         {project.github && (
           <a
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-secondary btn-sm"
-            style={{ padding: '4px 10px', fontSize: '0.75rem' }}
+            className="project-card-btn"
           >
-            <Github size={12} />
+            <Github size={12} color="#FFFFFF" />
             Code
           </a>
         )}
@@ -115,10 +201,9 @@ export default function ProjectCard({ project }) {
             href={project.demo}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-primary btn-sm"
-            style={{ padding: '4px 10px', fontSize: '0.75rem' }}
+            className="project-card-btn project-card-btn-demo"
           >
-            <ExternalLink size={12} />
+            <ExternalLink size={12} color="#0F172A" />
             Demo
           </a>
         )}

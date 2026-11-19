@@ -210,7 +210,7 @@ export default function HorizontalProjects() {
                     backfaceVisibility: 'visible'
                   }}
                 >
-                  <ProjectCard project={project} />
+                  <ProjectCard project={project} index={i} />
                 </div>
               );
             })}
