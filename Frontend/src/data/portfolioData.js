@@ -110,6 +110,40 @@ export const portfolioData = {
       image: "/images/rag_chatbot.png",
       github: "https://github.com/Salvador9111",
       demo: null
+    },
+    {
+      id: "lunar-lander",
+      number: "06",
+      name: "Lunar Landing — RL Agent",
+      tagline: "Autonomous rocket landing system trained with Deep Q-Networks to softly land on the moon",
+      date: "Oct. 2025",
+      technologies: ["Python", "Reinforcement Learning", "PyTorch", "Gymnasium", "Deep Q-Networks"],
+      metricTag: "+98% Soft Landing Rate",
+      metrics: [
+        "Trained a Deep Q-Network (DQN) agent with experience replay and target networks to autonomously control rocket thrusters.",
+        "Optimized reward shaping across orientation, angular velocity, and engine throttle to achieve soft, zero-impact landings.",
+        "Attained over 98% landing success rate across randomized wind turbulence and uneven lunar terrain environments."
+      ],
+      image: "/images/lunar_lander.png",
+      github: "https://github.com/Salvador9111",
+      demo: null
+    },
+    {
+      id: "autonomous-driving",
+      number: "07",
+      name: "Autonomous Driving — Behavioral Cloning",
+      tagline: "End-to-end deep learning model trained on human driving data to steer an autonomous vehicle",
+      date: "Jan. 2026",
+      technologies: ["Python", "Deep Learning", "TensorFlow", "Computer Vision", "OpenCV"],
+      metricTag: "Zero Off-Track | 60 FPS",
+      metrics: [
+        "Trained an end-to-end Convolutional Neural Network (NVIDIA CNN architecture) to map road camera frames directly to steering angles.",
+        "Preprocessed and augmented steering telemetry and multi-camera perspectives to mimic human driving behavior.",
+        "Successfully navigated complex winding tracks and varied lighting conditions with smooth lane-centering and zero recovery errors."
+      ],
+      image: "/images/autonomous_car.png",
+      github: "https://github.com/Salvador9111",
+      demo: null
     }
   ],
 

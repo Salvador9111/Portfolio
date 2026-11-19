@@ -2,8 +2,19 @@ import React, { useState, useRef } from 'react';
 import { ExternalLink } from 'lucide-react';
 import './CertificatesDeck.css';
 
-// 8 Verified Certifications with Standardized 1200x850 Real Pictures & 2026 Completion Dates
+// 9 Verified Certifications with Standardized 1200x850 Real Pictures & 2026 Completion Dates
 const CERTS = [
+  {
+    id: "nasa-openscience",
+    title: "Open Science 101",
+    issuer: "NASA",
+    year: 2026,
+    date: "Nov 2026",
+    code: "f2dc47ed-6cd8-4e50-9812-89445bbd2dcd",
+    tone: "#0B3D91", // NASA Cosmic Blue
+    image: "/images/certificates/cert_nasa_openscience.png",
+    url: "https://www.credly.com/badges/e8e428a1-2d26-46de-8277-e0f4c071c7f2/public_url"
+  },
   {
     id: "ms-genai",
     title: "Career Essentials in Generative AI",
